@@ -15,4 +15,4 @@ import { Component } from 'react'
 export class ThemeProvider extends Component {
 }
 
-export ThemeProvider
+export default ThemeProvider

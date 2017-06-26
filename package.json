@@ -1,0 +1,51 @@
+{
+  "name": "themeable",
+  "version": "1.0.0",
+  "description": "Decorator to enable theming for ReactJS components.",
+  "license": "Apache-2.0",
+  "main": "build",
+  "scripts": {
+    "clean": "rimraf \"build/!(.git)\"",
+    "build": "npm run clean && babel src -d build --ignore **/__*__/** -s",
+    "dev": "jest src --watch",
+    "start": "npm run dev",
+    "test": "jest src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/borela/presentable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/borela/presentable/issues"
+  },
+  "homepage": "https://github.com/borela/presentable#readme",
+  "keywords": [
+    "ctrine",
+    "decorator",
+    "react",
+    "theme",
+    "themeable",
+    "theming",
+    "ui",
+    "view"
+  ],
+  "author": [
+    {
+      "name": "Alexandre Borela",
+      "email": "alexandre@borela.tech",
+      "url": "http://www.borela.tech"
+    }
+  ],
+  "devDependencies": {
+    "babel-preset-ctrine-web-lib": "^1.6.1",
+    "ctrine-dev-preset": "^4.0.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  },
+  "peerDependencies": {
+    "react": "^15.6.1"
+  },
+  "dependencies": {
+    "presentable": "^3.2.0"
+  }
+}

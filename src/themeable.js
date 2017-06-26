@@ -29,7 +29,7 @@ export function themeable(identifier:string) {
 
     let prototype = targetComponent.prototype
 
-    // Add a marker.
+    // Add a marker used to detect if the component is themeable.
     prototype[SYMBOL] = true
 
     return targetComponent

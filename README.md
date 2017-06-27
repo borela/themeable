@@ -1,5 +1,17 @@
 Decorator to enable theming for ReactJS components.
 
+## Table of contents
+
+1. [Installation](#installation)
+2. [Usage](#usage)
+  1. [Imports](#imports)
+  2. [Default presenter](#default-presenter)
+  3. [Themeable button](#themeable-button)
+  4. [First component theme](#first-component-theme)
+  4. [First theme](#first-theme)
+3. [Definitions](#definitions)
+4. [Notes](#notes)
+
 ## Installation
 
 ```sh
@@ -8,14 +20,17 @@ npm install --save themeable
 
 ## Usage
 
-In this example, we will create a themeable button component. First we need some
-imports:
+In this example, we will create a themeable button component.
+
+### Imports
 
 ```js
 import React, { Component } from 'react'
 import { defaultPresenter } from 'presentable'
 import { themeable, ThemeProvider } from 'themeable'
 ```
+
+### Default presenter
 
 Themeables are presentables too, so we will define a default presenter for the
 button like so:
@@ -35,6 +50,8 @@ class DefaultPresenter extends Component {
   }
 }
 ```
+
+### Themeable button
 
 If the **“ComponentTheme”** lacks a default presenter, the themeable will try to
 use its default presenter. Let’s create our themeable button:
@@ -62,8 +79,12 @@ Our button is defined, and it has a default presenter, if you render it:
 ```
 
 It would just render the default presenter, nothing different from a normal
-presentable, the real fun begins now. Imagine for a second that our button can be
-animated or static and that it requires different tag structures for each case:
+presentable, the real fun begins now.
+
+### First component theme
+
+Imagine for a second that our button can be animated or static and that it
+requires different tag structures for each case:
 
 ```js
 class StaticPresenter extends Component {
@@ -135,6 +156,8 @@ and all, but what if we want to use a specific flair/presenter?
 // Result: <div class="blue flat thickBorders">Animated presenter set from theme!</div>
 ```
 
+### First theme
+
 Now it is starting to look like a theming system but setting the theme attribute
 for each component would be tedious, to solve that, we need to create a theme that
 bundles multiple component themes:
@@ -185,8 +208,6 @@ The theme is created, we just need to make it available for the components:
 Not that it does not matter how deep the component is in the tree, the theme will
 be available in the context for all children. That's it, now you could pack your
 theme into its own package and reuse it in other projects.
-
-
 
 ## Definitions
 

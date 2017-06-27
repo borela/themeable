@@ -117,6 +117,7 @@ const BUTTON_THEME = {
     // an array of strings.
     blue: ['blue', 'flat', 'thickBorders'],
     red: 'red raised thinBorders',
+    hollow: 'hollow specialClassForHollow',
     // The default key must point to one of the flairs defined before. The
     // only options for this example are **“red”** or **“blue”**.
     default: 'blue'
@@ -145,15 +146,31 @@ and all, but what if we want to use a specific flair/presenter?
 ```js
 // The presenter is omitted, so the default one will be used.
 <Button flair="red" theme={BUTTON_THEME}/>
-// Result: <div class="red raised thinBorders">Static presenter set from theme!</div>
+// Result:
+// <div class="red raised thinBorders">
+//   Static presenter set from theme!
+// </div>
 
-// Uses the specified flair and presenter.
+// Uses the specified flairs and presenter.
 <Button flair="red!animated" theme={BUTTON_THEME}/>
-// Result: <div class="red raised thinBorders">Animated presenter set from theme!</div>
+// Result:
+// <div class="red raised thinBorders">
+//   Animated presenter set from theme!
+// </div>
+
+// Multiple flairs can be used.
+<Button flair="red hollow!animated" theme={BUTTON_THEME}/>
+// Result:
+// <div class="red raised thinBorders hollow specialClassForHollow">
+//   Animated presenter set from theme!
+// </div>
 
 // The flair is omitted, so the default one will be used.
 <Button flair="!animated" theme={BUTTON_THEME}/>
-// Result: <div class="blue flat thickBorders">Animated presenter set from theme!</div>
+// Result:
+// <div class="blue flat thickBorders">
+//   Animated presenter set from theme!
+// </div>
 ```
 
 ### First theme
@@ -229,8 +246,8 @@ be used to change the appearance and structure of a themeable component.
 be aggregated in the presentable’s **“className”** property passed to the presenter.
 
 **Flair attribute:** Attribute used by the themeable component to select the flair
-and the presenter using the format **“flair!presenter”**. If one of theme is missing
-e.g. “flair!” and “!presenter”, the default flair/presenter will be used.
+and the presenter using the format **“flair!presenter”**. Multiple flairs can
+be used and the “!presenter” part can be ommitted entirely.
 
 ## How the “ComponentTheme” is resolved
 

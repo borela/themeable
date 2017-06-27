@@ -6,37 +6,6 @@ Decorator to enable theming for ReactJS components.
 npm install --save themeable
 ```
 
-## Definitions
-
-[**Presentable:** A decorated ReactJS component that delegates the rendering to
-a presenter.][presentable]
-
-[**Presenter:** A normal ReactJS component used to render the data from the
-presentable.][presentable]
-
-**Themeable:** A decorated ReactJS component that supports theming. A themeable
-component is also presentable and has all the features presentables has.
-
-**Theme:** An object that has metadata and a collection of **“ComponentThemes”**.
-
-**ComponentTheme:** An object that has **“flairs”** and **“presenters”** that can
-be used to change the appearance and structure of a themeable component.
-
-**Flair:** Is a string or array of strings containing the CSS classes that will
-be aggregated in the presentable’s **“className”** property passed to the presenter.
-
-**Flair attribute:** Attribute used by the themeable component to select the flair
-and the presenter using the format **“flair!presenter”**. If one of theme is missing
-e.g. “flair!” and “!presenter”, the default flair/presenter will be used.
-
-## How the “ComponentTheme” is resolved
-
-1. **Direct attribute “theme”:** This attribute can accept either a **“Theme”**
-  or a **“ComponentTheme”**.
-
-2. **Context attribute “theme”:** It can only accept **“Theme”** objects. This
-  attribute is set by the **“ThemeProvider”** component.
-
 ## Usage
 
 In this example, we will create a themeable button component. First we need some
@@ -216,6 +185,39 @@ The theme is created, we just need to make it available for the components:
 Not that it does not matter how deep the component is in the tree, the theme will
 be available in the context for all children. That's it, now you could pack your
 theme into its own package and reuse it in other projects.
+
+
+
+## Definitions
+
+[**Presentable:** A decorated ReactJS component that delegates the rendering to
+a presenter.][presentable]
+
+[**Presenter:** A normal ReactJS component used to render the data from the
+presentable.][presentable]
+
+**Themeable:** A decorated ReactJS component that supports theming. A themeable
+component is also presentable and has all the features presentables has.
+
+**Theme:** An object that has metadata and a collection of **“ComponentThemes”**.
+
+**ComponentTheme:** An object that has **“flairs”** and **“presenters”** that can
+be used to change the appearance and structure of a themeable component.
+
+**Flair:** Is a string or array of strings containing the CSS classes that will
+be aggregated in the presentable’s **“className”** property passed to the presenter.
+
+**Flair attribute:** Attribute used by the themeable component to select the flair
+and the presenter using the format **“flair!presenter”**. If one of theme is missing
+e.g. “flair!” and “!presenter”, the default flair/presenter will be used.
+
+## How the “ComponentTheme” is resolved
+
+1. **Direct attribute “theme”:** This attribute can accept either a **“Theme”**
+  or a **“ComponentTheme”**.
+
+2. **Context attribute “theme”:** It can only accept **“Theme”** objects. This
+  attribute is set by the **“ThemeProvider”** component.
 
 ## Notes
 

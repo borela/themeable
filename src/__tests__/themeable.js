@@ -10,12 +10,14 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import BarPresenter from 'BarPresenter'
+import FooPresenter from 'FooPresenter'
 import React, { Component } from 'react'
 import { defaultPresenter, isPresentable, presentable } from 'presentable'
-import { render, shallow } from 'enzyme'
-import { themeable } from '..'
 import { NORMAL as NORMAL_COMPONENT_THEME } from 'AwesomeComponentTheme'
 import { NORMAL as NORMAL_THEME } from 'AwesomeTheme'
+import { shallow } from 'enzyme'
+import { themeable } from '..'
 
 describe('Decorator themeable applied on “SomeComponent”', () => {
   describe('It is presentable already', () => {
@@ -120,10 +122,10 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
         [ 'green red!', NORMALIZED_GREEN_RED_FLAIRS ],
         [ 'green red!', NORMALIZED_GREEN_RED_FLAIRS ],
         // Irregular spaces must be accepted too.
-        [ 'red    green', NORMALIZED_RED_GREEN_FLAIRS ],
+        [ 'red green', NORMALIZED_RED_GREEN_FLAIRS ],
         [ 'red  green!', NORMALIZED_RED_GREEN_FLAIRS ],
         [ 'green   red!', NORMALIZED_GREEN_RED_FLAIRS ],
-        [ 'green     red!', NORMALIZED_GREEN_RED_FLAIRS ]
+        [ 'green    red!', NORMALIZED_GREEN_RED_FLAIRS ]
       ]
 
       for (let [ flair, expected ] of TEST_DATA) {
@@ -184,63 +186,74 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
       @defaultPresenter(SomePresenter)
       class SomeComponent extends Component {}
 
-      it('renders the default presenter', () => {
-        const WRAPPER = render(<SomeComponent/>)
-        expect(WRAPPER).toMatchSnapshot()
+      it('returns the default presenter', () => {
+        const INSTANCE = shallow(<SomeComponent/>).instance()
+        expect(INSTANCE.getPresenter())
+          .toBe(SomePresenter)
       })
 
-      describe('Using a “ComponentTheme”', () => {
-        it('renders the default presenter and flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(<SomeComponent theme={NORMAL_COMPONENT_THEME}/>)
-          expect(WRAPPER).toMatchSnapshot()
-        })
+      it('returns the default presenter from a “ComponentTheme” or “Theme”', () => {
+        const TEST_DATA = [
+          undefined,
+          'red',
+          'green ',
+          ' green ',
+          'red green',
+          'red  green',
+          'red   green'
+        ]
 
-        it('renders the default presenter and the specified flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(
+        for (let flair of TEST_DATA) {
+          const COMP1 = shallow(
             <SomeComponent
-              flair="red"
+              flair={flair}
               theme={NORMAL_COMPONENT_THEME}
             />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
+          ).instance()
 
-        it('renders the default presenter and the specified flair(array) from the “ComponentTheme”', () => {
-          const WRAPPER = render(
+          const COMP2 = shallow(
             <SomeComponent
-              flair="green"
-              theme={NORMAL_COMPONENT_THEME}
+              flair={flair}
+              theme={NORMAL_THEME}
             />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
+          ).instance()
+
+          expect(COMP1.getPresenter()).toBe(BarPresenter)
+          expect(COMP2.getPresenter()).toBe(BarPresenter)
+        }
       })
 
-      describe('Using a “Theme”', () => {
-        it('renders the default presenter and flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(<SomeComponent theme={NORMAL_THEME}/>)
-          expect(WRAPPER).toMatchSnapshot()
-        })
+      it('returns the specified presenter', () => {
+        const TEST_DATA = [
+          '!foo',
+          '! foo',
+          '!  foo',
+          'red!foo',
+          'red! foo',
+          'red!  foo',
+          'green red!foo',
+          'green red! foo',
+          'green red!  foo'
+        ]
 
-        it('renders the default presenter and the specified flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(
+        for (let flair of TEST_DATA) {
+          const COMP1 = shallow(
             <SomeComponent
-              flair="red"
+              flair={flair}
+              theme={NORMAL_COMPONENT_THEME}
+            />
+          ).instance()
+
+          const COMP2 = shallow(
+            <SomeComponent
+              flair={flair}
               theme={NORMAL_THEME}
             />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
+          ).instance()
 
-        it('renders the default presenter and the specified flair(array) from the “ComponentTheme”', () => {
-          const WRAPPER = render(
-            <SomeComponent
-              flair="green"
-              theme={NORMAL_THEME}
-            />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
+          expect(COMP1.getPresenter()).toBe(FooPresenter)
+          expect(COMP2.getPresenter()).toBe(FooPresenter)
+        }
       })
     })
 
@@ -248,104 +261,74 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
       @themeable('SomeComponent')
       class SomeComponent extends Component {}
 
-      it('it is empty', () => {
-        const WRAPPER = render(<SomeComponent/>)
-        expect(WRAPPER.children().length)
-          .toBe(0)
+      it('returns undefined', () => {
+        const INSTANCE = shallow(<SomeComponent/>).instance()
+        expect(INSTANCE.getPresenter())
+          .toBeUndefined()
       })
 
-      describe('Using a “ComponentTheme”', () => {
-        it('renders the default presenter and flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(<SomeComponent theme={NORMAL_COMPONENT_THEME}/>)
-          expect(WRAPPER).toMatchSnapshot()
-        })
+      it('returns the default presenter from a “ComponentTheme” or “Theme”', () => {
+        const TEST_DATA = [
+          undefined,
+          'red',
+          'green ',
+          ' green ',
+          'red green',
+          'red  green',
+          'red   green'
+        ]
 
-        it('renders the default presenter and the specified flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(
+        for (let flair of TEST_DATA) {
+          const COMP1 = shallow(
             <SomeComponent
-              flair="red"
+              flair={flair}
               theme={NORMAL_COMPONENT_THEME}
             />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
+          ).instance()
 
-        it('renders the default presenter and the specified flair(array) from the “ComponentTheme”', () => {
-          const WRAPPER = render(
+          const COMP2 = shallow(
             <SomeComponent
-              flair="green"
-              theme={NORMAL_COMPONENT_THEME}
+              flair={flair}
+              theme={NORMAL_THEME}
             />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
+          ).instance()
 
-        it('renders a specified presenter and the default flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(
-            <SomeComponent
-              flair="!foo"
-              theme={NORMAL_COMPONENT_THEME}
-            />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
-
-        it('renders a specified presenter and flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(
-            <SomeComponent
-              flair="green!foo"
-              theme={NORMAL_COMPONENT_THEME}
-            />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
+          expect(COMP1.getPresenter()).toBe(BarPresenter)
+          expect(COMP2.getPresenter()).toBe(BarPresenter)
+        }
       })
 
-      describe('Using a “Theme”', () => {
-        it('renders the default presenter and flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(<SomeComponent theme={NORMAL_THEME}/>)
-          expect(WRAPPER).toMatchSnapshot()
-        })
+      it('returns the specified presenter', () => {
+        const TEST_DATA = [
+          '!foo',
+          '! foo',
+          '!  foo',
+          'red!foo',
+          'red! foo',
+          'red!  foo',
+          'green red!foo',
+          'green red! foo',
+          'green red!  foo'
+        ]
 
-        it('renders the default presenter and the specified flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(
+        for (let flair of TEST_DATA) {
+          const COMP1 = shallow(
             <SomeComponent
-              flair="red"
+              flair={flair}
+              theme={NORMAL_COMPONENT_THEME}
+            />
+          ).instance()
+
+          const COMP2 = shallow(
+            <SomeComponent
+              flair={flair}
               theme={NORMAL_THEME}
             />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
+          ).instance()
 
-        it('renders the default presenter and the specified flair(array) from the “ComponentTheme”', () => {
-          const WRAPPER = render(
-            <SomeComponent
-              flair="green"
-              theme={NORMAL_THEME}
-            />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
-
-        it('renders a specified presenter and the default flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(
-            <SomeComponent
-              flair="!foo"
-              theme={NORMAL_THEME}
-            />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
-
-        it('renders a specified presenter and flair from the “ComponentTheme”', () => {
-          const WRAPPER = render(
-            <SomeComponent
-              flair="green!foo"
-              theme={NORMAL_THEME}
-            />
-          )
-          expect(WRAPPER).toMatchSnapshot()
-        })
+          expect(COMP1.getPresenter()).toBe(FooPresenter)
+          expect(COMP2.getPresenter()).toBe(FooPresenter)
+        }
       })
     })
   })

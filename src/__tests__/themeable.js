@@ -112,18 +112,18 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
 
       let TEST_DATA = [
         [ 'green', NORMALIZED_GREEN_FLAIR ],
-        [ 'green:', NORMALIZED_GREEN_FLAIR ],
-        [ 'red:', NORMALIZED_RED_FLAIR ],
-        [ 'red:', NORMALIZED_RED_FLAIR ],
+        [ 'green!', NORMALIZED_GREEN_FLAIR ],
+        [ 'red!', NORMALIZED_RED_FLAIR ],
+        [ 'red!', NORMALIZED_RED_FLAIR ],
         [ 'red green', NORMALIZED_RED_GREEN_FLAIRS ],
-        [ 'red green:', NORMALIZED_RED_GREEN_FLAIRS ],
-        [ 'green red:', NORMALIZED_GREEN_RED_FLAIRS ],
-        [ 'green red:', NORMALIZED_GREEN_RED_FLAIRS ],
+        [ 'red green!', NORMALIZED_RED_GREEN_FLAIRS ],
+        [ 'green red!', NORMALIZED_GREEN_RED_FLAIRS ],
+        [ 'green red!', NORMALIZED_GREEN_RED_FLAIRS ],
         // Irregular spaces must be accepted too.
         [ 'red    green', NORMALIZED_RED_GREEN_FLAIRS ],
-        [ 'red  green:', NORMALIZED_RED_GREEN_FLAIRS ],
-        [ 'green   red:', NORMALIZED_GREEN_RED_FLAIRS ],
-        [ 'green     red:', NORMALIZED_GREEN_RED_FLAIRS ]
+        [ 'red  green!', NORMALIZED_RED_GREEN_FLAIRS ],
+        [ 'green   red!', NORMALIZED_GREEN_RED_FLAIRS ],
+        [ 'green     red!', NORMALIZED_GREEN_RED_FLAIRS ]
       ]
 
       for (let [ flair, expected ] of TEST_DATA) {

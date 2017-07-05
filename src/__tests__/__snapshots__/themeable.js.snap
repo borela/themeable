@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It does not have a default presenter Using a “ComponentTheme” renders a specified presenter and flair from the “ComponentTheme” 1`] = `
+<div
+  class="greenA greenB greenC"
+>
+  Foo presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It does not have a default presenter Using a “ComponentTheme” renders a specified presenter and flair from the “Theme” 1`] = `
+<div
+  class="greenA greenB greenC"
+>
+  Foo presenter!
+</div>
+`;
+
 exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It does not have a default presenter Using a “ComponentTheme” renders a specified presenter and the default flair from the “ComponentTheme” 1`] = `
 <div
   class="blueA blueB blueC"

@@ -299,6 +299,26 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           )
           expect(WRAPPER).toMatchSnapshot()
         })
+
+        it('renders a specified presenter and flair from the “ComponentTheme”', () => {
+          const WRAPPER = render(
+            <SomeComponent
+              flair="green !foo"
+              theme={NORMAL_COMPONENT_THEME}
+            />
+          )
+          expect(WRAPPER).toMatchSnapshot()
+        })
+
+        it('renders a specified presenter and flair from the “Theme”', () => {
+          const WRAPPER = render(
+            <SomeComponent
+              flair="green !foo"
+              theme={NORMAL_THEME}
+            />
+          )
+          expect(WRAPPER).toMatchSnapshot()
+        })
       })
 
       describe('Using a “Theme”', () => {

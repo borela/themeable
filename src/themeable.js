@@ -110,8 +110,12 @@ export function themeable(identifier:string) {
         ? `${this.getFlair()} ${result.className}`
         : this.getFlair()
 
-      if (RESOLVED_FLAIR)
-        result.props.className = RESOLVED_FLAIR
+      if (RESOLVED_FLAIR) {
+        if (result.props.className)
+          result.props.className += ` ${RESOLVED_FLAIR}`
+        else
+          result.props.className = RESOLVED_FLAIR
+      }
 
       delete result.props.flair
       delete result.props.presenter

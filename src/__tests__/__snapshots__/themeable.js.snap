@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It does not have a default presenter Using a “ComponentTheme” renders the default presenter and flair from the “ComponentTheme” 1`] = `
+<div
+  class="blueA blueB blueC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It does not have a default presenter Using a “ComponentTheme” renders the default presenter and the specified flair from the “ComponentTheme” 1`] = `
+<div
+  class="redA redB redC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It does not have a default presenter Using a “ComponentTheme” renders the default presenter and the specified flair(array) from the “ComponentTheme” 1`] = `
+<div
+  class="greenA greenB greenC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It does not have a default presenter Using a “Theme” renders the default presenter and flair from the “ComponentTheme” 1`] = `
+<div
+  class="blueA blueB blueC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It does not have a default presenter Using a “Theme” renders the default presenter and the specified flair from the “ComponentTheme” 1`] = `
+<div
+  class="redA redB redC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It does not have a default presenter Using a “Theme” renders the default presenter and the specified flair(array) from the “ComponentTheme” 1`] = `
+<div
+  class="greenA greenB greenC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It has a default presenter Using a “ComponentTheme” renders the default presenter and flair from the “ComponentTheme” 1`] = `
+<div
+  class="blueA blueB blueC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It has a default presenter Using a “ComponentTheme” renders the default presenter and the specified flair from the “ComponentTheme” 1`] = `
+<div
+  class="redA redB redC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It has a default presenter Using a “ComponentTheme” renders the default presenter and the specified flair(array) from the “ComponentTheme” 1`] = `
+<div
+  class="greenA greenB greenC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It has a default presenter Using a “Theme” renders the default presenter and flair from the “ComponentTheme” 1`] = `
+<div
+  class="blueA blueB blueC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It has a default presenter Using a “Theme” renders the default presenter and the specified flair from the “ComponentTheme” 1`] = `
+<div
+  class="redA redB redC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It has a default presenter Using a “Theme” renders the default presenter and the specified flair(array) from the “ComponentTheme” 1`] = `
+<div
+  class="greenA greenB greenC"
+>
+  Bar presenter!
+</div>
+`;
+
+exports[`Decorator themeable applied on “SomeComponent” Modifies the “getPresenter” method It has a default presenter renders the default presenter 1`] = `
+<div>
+  Default presenter!
+</div>
+`;

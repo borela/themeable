@@ -16,8 +16,8 @@ import { Component } from 'react'
 import { isPresentable, presentable } from 'presentable'
 
 const SYMBOL = Symbol.for('themeable')
-const FLAIR_PATTERN = /^(\w+(?:\s+\w+)*)!?/
-const PRESENTER_PATTERN = /!(\w+)$/
+const FLAIR_PATTERN = /^(\w+(?:\s+\w+)*)\s*!?/
+const PRESENTER_PATTERN = /!\s*(\w+)$/
 
 function extractComponentTheme(theme:Theme, identifier) {
   return theme.componentThemes[identifier]

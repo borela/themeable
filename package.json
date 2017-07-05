@@ -46,6 +46,6 @@
     "react": "^15.6.1"
   },
   "dependencies": {
-    "presentable": "^3.2.0"
+    "presentable": "^3.3.0"
   }
 }

@@ -174,6 +174,71 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     })
   })
 
+  describe('Method “getPresentableData”', () => {
+    @themeable('SomeComponent')
+    class SomeComponent extends Component {}
+
+    it('adds the flairs to “className”', () => {
+      const TEST_DATA = [
+        [ undefined, 'blueA blueB blueC' ],
+        [ 'red', 'redA redB redC' ],
+        [ 'green', 'greenA greenB greenC' ],
+        [ 'red green', 'redA redB redC greenA greenB greenC' ],
+        [ 'green red', 'greenA greenB greenC redA redB redC' ]
+      ]
+
+      for (let [ flair, expected ] of TEST_DATA) {
+        const COMP1 = shallow(
+          <SomeComponent
+            flair={flair}
+            theme={NORMAL_COMPONENT_THEME}
+          />
+        ).instance()
+
+        const COMP2 = shallow(
+          <SomeComponent
+            flair={flair}
+            theme={NORMAL_THEME}
+          />
+        ).instance()
+
+        expect(COMP1.getPresentableData().props.className).toBe(expected)
+        expect(COMP2.getPresentableData().props.className).toBe(expected)
+      }
+    })
+
+    it('adds the flairs to existing “className”', () => {
+      const TEST_DATA = [
+        [ undefined, 'blueA blueB blueC' ],
+        [ 'red', 'redA redB redC' ],
+        [ 'green', 'greenA greenB greenC' ],
+        [ 'red green', 'redA redB redC greenA greenB greenC' ],
+        [ 'green red', 'greenA greenB greenC redA redB redC' ]
+      ]
+
+      for (let [ flair, expected ] of TEST_DATA) {
+        const COMP1 = shallow(
+          <SomeComponent
+            className="foo bar"
+            flair={flair}
+            theme={NORMAL_COMPONENT_THEME}
+          />
+        ).instance()
+
+        const COMP2 = shallow(
+          <SomeComponent
+            className="foo bar"
+            flair={flair}
+            theme={NORMAL_THEME}
+          />
+        ).instance()
+
+        expect(COMP1.getPresentableData().props.className).toBe(`foo bar ${expected}`)
+        expect(COMP2.getPresentableData().props.className).toBe(`foo bar ${expected}`)
+      }
+    })
+  })
+
   describe('Method “getPresenter”', () => {
     describe('It has a default presenter', () => {
       class SomePresenter extends Component {

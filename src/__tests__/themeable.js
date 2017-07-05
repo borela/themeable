@@ -233,8 +233,10 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           />
         ).instance()
 
-        expect(COMP1.getPresentableData().props.className).toBe(`foo bar ${expected}`)
-        expect(COMP2.getPresentableData().props.className).toBe(`foo bar ${expected}`)
+        expect(COMP1.getPresentableData().props.className)
+          .toBe(`foo bar ${expected}`)
+        expect(COMP2.getPresentableData().props.className)
+          .toBe(`foo bar ${expected}`)
       }
     })
   })

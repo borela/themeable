@@ -12,7 +12,7 @@
 
 import { Component } from 'react'
 
-export class ThemeProvider extends Component {
+export class ContextTheme extends Component {
 }
 
-export default ThemeProvider
+export default ContextTheme

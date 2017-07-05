@@ -27,7 +27,7 @@ In this example, we will create a themeable button component.
 ```js
 import React, { Component } from 'react'
 import { defaultPresenter } from 'presentable'
-import { themeable, ThemeProvider } from 'themeable'
+import { ContextTheme, themeable } from 'themeable'
 ```
 
 ### Default presenter
@@ -203,7 +203,7 @@ const AWESOME_THEME = {
 The theme is created, we just need to make it available for the components:
 
 ```js
-<ThemeProvider theme={AWESOME_THEME}>
+<ContextTheme theme={AWESOME_THEME}>
   <div>
     <div>
       <div>
@@ -219,7 +219,7 @@ The theme is created, we just need to make it available for the components:
       </div>
     </div>
   </div>
-</ThemeProvider>
+</ContextTheme>
 ```
 
 Not that it does not matter how deep the component is in the tree, the theme will
@@ -254,21 +254,21 @@ be used and the “!presenter” part can be ommitted entirely.
 1. **Direct attribute “theme”:** This attribute can accept either a **“Theme”**
   or a **“ComponentTheme”**.
 
-2. **Context attribute “theme”:** It can only accept **“Theme”** objects. This
-  attribute is set by the **“ThemeProvider”** component.
+2. **Context attribute “theme”:** It only accepts **“Theme”** objects. This
+  attribute is set by the **“ContextTheme”** component.
 
 ## Notes
 
 * The **“Theme”** can be passed directly to the component just like the **“ComponentTheme”**.
 * You can override the theme available in the context by using nested theme providers:
   ```js
-  <ThemeProvider theme={AWESOME_THEME}>
+  <ContextTheme theme={AWESOME_THEME}>
     <div>
       {/* Themeable components here will use “AWESOME_THEME”. */}
       <Button/>
       <Button flair="blue"/>
       <Button flair="!animated"/>
-      <ThemeProvider theme={ANOTHER_AWESOME_THEME}>
+      <ContextTheme theme={ANOTHER_AWESOME_THEME}>
         {/* Themeable components here will use “ANOTHER_AWESOME_THEME”. */}
         <div>
           <div>
@@ -276,9 +276,9 @@ be used and the “!presenter” part can be ommitted entirely.
             <Button flair="blue!static"/>
           </div>
         </div>
-      </ThemeProvider>
+      </ContextTheme>
     </div>
-  </ThemeProvider>
+  </ContextTheme>
   ```
 
 [presentable]:https://github.com/borela/presentable

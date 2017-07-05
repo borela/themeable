@@ -20,7 +20,7 @@ import { shallow } from 'enzyme'
 import { themeable } from '..'
 
 describe('Decorator themeable applied on “SomeComponent”', () => {
-  describe('It is presentable already', () => {
+  describe('Presentable already', () => {
     @themeable('SomeComponent')
     @presentable
     class SomeComponent extends Component {}
@@ -34,7 +34,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     })
   })
 
-  describe('It is not presentable yet', () => {
+  describe('Not presentable yet', () => {
     @themeable('SomeComponent')
     class SomeComponent extends Component {}
 
@@ -55,7 +55,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     })
   })
 
-  describe('Add a method “getComponentTheme”', () => {
+  describe('Method “getComponentTheme”', () => {
     @themeable('SomeComponent')
     class SomeComponent extends Component {}
 
@@ -80,7 +80,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     })
   })
 
-  describe('Add method “getFlair”', () => {
+  describe('Method “getFlair”', () => {
     @themeable('SomeComponent')
     class SomeComponent extends Component {}
 
@@ -149,7 +149,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     })
   })
 
-  describe('Add a method “getTheme”', () => {
+  describe('Method “getTheme”', () => {
     @themeable('SomeComponent')
     class SomeComponent extends Component {}
 
@@ -174,7 +174,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     })
   })
 
-  describe('Modifies the “getPresenter” method', () => {
+  describe('Method “getPresenter”', () => {
     describe('It has a default presenter', () => {
       class SomePresenter extends Component {
         render() {

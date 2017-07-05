@@ -63,13 +63,16 @@ export function themeable(identifier:string) {
 
       // Default or specific flair(s).
       const { flair: FLAIR_PROP } = this.props
-      const FLAIRS = FLAIR_PROP
-        ? FLAIR_PATTERN.exec(FLAIR_PROP)[1]
-        : COMPONENT_THEME.flairs.default
+      let flairs = COMPONENT_THEME.flairs.default
+      if (FLAIR_PROP) {
+        const MATCHES = FLAIR_PATTERN.exec(FLAIR_PROP)
+        if (MATCHES !== null)
+          flairs = MATCHES[1]
+      }
 
       // Resolve the flair(s).
       let result = ''
-      for (const TARGET of FLAIRS.split(/\s+/)) {
+      for (const TARGET of flairs.split(/\s+/)) {
         let extracted = COMPONENT_THEME.flairs[TARGET]
         if (Array.isArray(extracted))
           extracted = extracted.join(' ')

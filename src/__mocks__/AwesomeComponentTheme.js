@@ -15,8 +15,7 @@ import FooPresenter from './FooPresenter'
 
 const FLAIRS = {
   blue: 'blueA blueB blueC',
-  // Irregular spaces must be corrected by the theming system but be allowed by
-  // the theming system.
+  // Irregular spaces must be allowed but corrected by the theming system.
   green: [ '  greenA   ', 'greenB', 'greenC' ],
   red: 'redA     redB   redC'
 }

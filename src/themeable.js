@@ -12,6 +12,7 @@
 // @flow
 
 import type { Theme } from './Theme'
+import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { isPresentable, presentable } from 'presentable'
 
@@ -41,7 +42,13 @@ export function themeable(identifier:string) {
 
     let prototype = targetComponent.prototype
 
-    // Add a marker used to detect if the component is themeable.
+    // The theme attribute in the context will be defined by the “ContextTheme”
+    // component.
+    if (!targetComponent.contextTypes)
+      targetComponent.contextTypes = {}
+    targetComponent.contextTypes.theme = PropTypes.object
+
+    // Marker used to detect if the component is themeable.
     Object.defineProperty(prototype, SYMBOL, {
       get() {
         return true
@@ -125,6 +132,8 @@ export function themeable(identifier:string) {
 
     prototype.getTheme = function() {
       let { theme } = this.props
+      if (!theme)
+        return this.context.theme
       return isTheme(theme) ? theme : undefined
     }
 

@@ -10,9 +10,17 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import PropTypes from 'prop-types'
 import { Component } from 'react'
 
 export class ContextTheme extends Component {
+  childContextTypes = {
+    theme: PropTypes.object
+  }
+
+  getChildContext() {
+    return { theme: this.props.theme }
+  }
 }
 
 export default ContextTheme

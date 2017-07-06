@@ -153,24 +153,65 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     @themeable('SomeComponent')
     class SomeComponent extends Component {}
 
-    it('returns undefined when no “Theme” is specified', () => {
-      const INSTANCE = shallow(<SomeComponent/>).instance()
-      expect(INSTANCE.getTheme())
-        .toBeUndefined()
+    describe('No theme in the context', () => {
+      it('returns undefined when no “Theme” is specified', () => {
+        const INSTANCE = shallow(<SomeComponent/>).instance()
+        expect(INSTANCE.getTheme())
+          .toBeUndefined()
+      })
+
+      it('returns undefined when a “ComponentTheme” is specified', () => {
+        const INSTANCE = shallow(<SomeComponent theme={NORMAL_COMPONENT_THEME}/>)
+          .instance()
+        expect(INSTANCE.getTheme())
+          .toBeUndefined()
+      })
+
+      it('returns the “Theme” specified', () => {
+        const INSTANCE = shallow(<SomeComponent theme={NORMAL_THEME}/>)
+          .instance()
+        expect(INSTANCE.getTheme())
+          .toEqual(NORMAL_THEME)
+      })
     })
 
-    it('returns undefined when a “ComponentTheme” is specified', () => {
-      const INSTANCE = shallow(<SomeComponent theme={NORMAL_COMPONENT_THEME}/>)
-        .instance()
-      expect(INSTANCE.getTheme())
-        .toBeUndefined()
-    })
+    describe('There’s a theme in the context', () => {
+      // The format of the object is not important here, exceptions will be raised
+      // when the system tries to extract the flair or presenter from a invalid
+      // theme.
+      const CONTEXT_THEME = {
+        a: 1, b: 2, c: 3
+      }
 
-    it('returns the “Theme” specified', () => {
-      const INSTANCE = shallow(<SomeComponent theme={NORMAL_THEME}/>)
-        .instance()
-      expect(INSTANCE.getTheme())
-        .toEqual(NORMAL_THEME)
+      it('returns the “Theme” from the context', () => {
+        const INSTANCE = shallow(
+          <SomeComponent/>,
+          { context: { theme: CONTEXT_THEME }}
+        )
+          .instance()
+        expect(INSTANCE.getTheme())
+          .toEqual(CONTEXT_THEME)
+      })
+
+      it('returns undefined when a “ComponentTheme” is specified', () => {
+        const INSTANCE = shallow(
+          <SomeComponent theme={NORMAL_COMPONENT_THEME}/>,
+          { context: { theme: CONTEXT_THEME }}
+        )
+          .instance()
+        expect(INSTANCE.getTheme())
+          .toBeUndefined()
+      })
+
+      it('returns the “Theme” specified', () => {
+        const INSTANCE = shallow(
+          <SomeComponent theme={NORMAL_THEME}/>,
+          { context: { theme: CONTEXT_THEME }}
+        )
+          .instance()
+        expect(INSTANCE.getTheme())
+          .toEqual(NORMAL_THEME)
+      })
     })
   })
 

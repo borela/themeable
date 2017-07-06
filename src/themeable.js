@@ -82,6 +82,12 @@ export function themeable(identifier:string) {
       let result = ''
       for (const TARGET of flairs.split(/\s+/)) {
         let extracted = COMPONENT_THEME.flairs[TARGET]
+
+        if (extracted === undefined) {
+          const THEME = this.getTheme()
+          throw new Error(`Flair “${TARGET}” is not defined for “${identifier}” on theme “${THEME.name}”.`)
+        }
+
         if (Array.isArray(extracted))
           extracted = extracted.join(' ')
         result += ` ${extracted}`
@@ -96,6 +102,7 @@ export function themeable(identifier:string) {
       const COMPONENT_THEME = this.getComponentTheme()
       if (!COMPONENT_THEME)
         return this.props.presenter || this.defaultPresenter
+
       // Specific presenter from the theme.
       const { flair: FLAIR_PROP } = this.props
       let presenter = COMPONENT_THEME.presenters.default
@@ -104,7 +111,13 @@ export function themeable(identifier:string) {
         if (MATCHES !== null)
           presenter = MATCHES[1]
       }
-      return COMPONENT_THEME.presenters[presenter]
+
+      let result = COMPONENT_THEME.presenters[presenter]
+      if (result === undefined) {
+        const THEME = this.getTheme()
+        throw new Error(`Presenter “${presenter}” is not defined for “${identifier}” on theme “${THEME.name}”.`)
+      }
+      return result
     }
 
     // Used to filter the “theme” and “flair” attributes.

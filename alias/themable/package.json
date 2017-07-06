@@ -1,0 +1,31 @@
+{
+  "name": "themable",
+  "version": "1.0.0",
+  "description": "Use “themeable” instead: https://github.com/borela/themeable",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/borela/themeable"
+  },
+  "bugs": {
+    "url": "https://github.com/borela/themeable/issues"
+  },
+  "homepage": "https://github.com/borela/themeable#readme",
+  "keywords": [
+    "ctrine",
+    "decorator",
+    "react",
+    "theme",
+    "themeable",
+    "theming",
+    "ui",
+    "view"
+  ],
+  "author": [
+    {
+      "name": "Alexandre Borela",
+      "email": "alexandre@borela.tech",
+      "url": "http://www.borela.tech"
+    }
+  ]
+}

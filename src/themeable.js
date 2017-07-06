@@ -56,7 +56,7 @@ export function themeable(identifier:string) {
     })
 
     prototype.getComponentTheme = function() {
-      let { theme } = this.props
+      let { theme = this.context.theme } = this.props
       return isTheme(theme)
         ? extractComponentTheme(theme, identifier)
         : theme
@@ -76,6 +76,7 @@ export function themeable(identifier:string) {
         if (MATCHES !== null)
           flairs = MATCHES[1]
       }
+      flairs = flairs.trim()
 
       // Resolve the flair(s).
       let result = ''

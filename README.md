@@ -58,7 +58,7 @@ use its default presenter. Let’s create our themeable button:
 
 ```js
 // The argument passed is the target component theme identifier used to extract
-// the **“ComponentTheme”** from the **“Theme”** bundle.
+// the “ComponentTheme” from the “Theme” bundle.
 @themeable('myAwesomeButton')
 // Here we set the default presenter like we do with presentables.
 @defaultPresenter(DefaultPresenter)
@@ -106,12 +106,12 @@ That’s nice but we might need to set different CSS classes for animated vs sta
 buttons and on top of that, we need a way to pass all this data to our themeable
 component.
 
-To achieve that, we’ll create our first “ComponentTheme”:
+To achieve that, we’ll create our first **“ComponentTheme”**:
 
 ```js
 // This is a ”ComponentTheme”.
 const BUTTON_THEME = {
-  // The **“flairs”** key is required.
+  // The “flairs” key is required.
   flairs: {
     // Flairs are just CSS classes that can be specified as a single string or
     // an array of strings.
@@ -119,7 +119,7 @@ const BUTTON_THEME = {
     red: 'red raised thinBorders',
     hollow: 'hollow specialClassForHollow',
     // The default key must point to one of the flairs defined before. The
-    // only options for this example are **“red”** or **“blue”**.
+    // only options for this example are “red”, “blue” or “hollow”.
     default: 'blue'
   },
   // Component themes may not have any presenters at all.
@@ -127,7 +127,7 @@ const BUTTON_THEME = {
     animated: AnimatedPresenter,
     static: StaticPresenter,
     // The default key must point to one of the presenters defined before.
-    // In this case, the only options are **“animated”** or **“static”**.
+    // In this case, the only options are “animated” or “static”.
     default: 'static'
   }
 }
@@ -151,7 +151,7 @@ and all, but what if we want to use a specific flair/presenter?
 //   Static presenter set from theme!
 // </div>
 
-// Uses the specified flairs and presenter.
+// Specific flair and presenter.
 <Button flair="red!animated" theme={BUTTON_THEME}/>
 // Result:
 // <div class="red raised thinBorders">
@@ -180,7 +180,7 @@ for each component would be tedious, to solve that, we need to create a theme th
 bundles multiple component themes:
 
 ```js
-// This is a ”Theme” and it might contain many **“ComponentThemes”**.
+// This is a ”Theme” and it might contain many “ComponentThemes”.
 const AWESOME_THEME = {
   // Optional metadata.
   name: 'Awesome Theme',
@@ -193,8 +193,8 @@ const AWESOME_THEME = {
   // Actual themes.
   componentThemes: {
     // Remember that we typed the decorator like “@themeable('myAwesomeButton')”?
-    // That identifier is used here because we can bundle many component themes
-    // in a theme.
+    // That identifier is used here because we can bundle many “ComponentThemes”
+    // in a “Theme”.
     myAwesomeButton: BUTTON_THEME
   }
 }

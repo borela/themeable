@@ -18,6 +18,17 @@ import { shallow } from 'enzyme'
 import { TEST_DATA } from 'data'
 import { themeable } from '..'
 
+const CONTEXT_THEME = {
+  ...NORMAL_THEME,
+  a: 1, b: 2, c: 3
+}
+
+const CONTEXT = {
+  context: {
+    theme: CONTEXT_THEME
+  }
+}
+
 describe('Decorator themeable applied on “SomeComponent”', () => {
   describe('Presentable already', () => {
     @themeable('SomeComponent')
@@ -58,24 +69,57 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     @themeable('SomeComponent')
     class SomeComponent extends Component {}
 
-    it('returns undefined when no “ComponentTheme” or “Theme” is specified', () => {
-      const INSTANCE = shallow(<SomeComponent/>).instance()
-      expect(INSTANCE.getComponentTheme())
-        .toBeUndefined()
+    describe('No theme in the context', () => {
+      it('returns undefined when no “ComponentTheme” or “Theme” is available', () => {
+        const INSTANCE = shallow(<SomeComponent/>).instance()
+        expect(INSTANCE.getComponentTheme())
+          .toBeUndefined()
+      })
+
+      it('returns the “ComponentTheme” specified', () => {
+        const INSTANCE = shallow(<SomeComponent theme={NORMAL_COMPONENT_THEME}/>)
+          .instance()
+        expect(INSTANCE.getComponentTheme())
+          .toEqual(NORMAL_COMPONENT_THEME)
+      })
+
+      it('returns the used “ComponentTheme” when a “Theme” is specified', () => {
+        const INSTANCE = shallow(<SomeComponent theme={NORMAL_THEME}/>)
+          .instance()
+        expect(INSTANCE.getComponentTheme())
+          .toEqual(NORMAL_COMPONENT_THEME)
+      })
     })
 
-    it('returns the “ComponentTheme” specified', () => {
-      const INSTANCE = shallow(<SomeComponent theme={NORMAL_COMPONENT_THEME}/>)
-        .instance()
-      expect(INSTANCE.getComponentTheme())
-        .toEqual(NORMAL_COMPONENT_THEME)
-    })
+    describe('There’s a theme in the context', () => {
+      it('returns the used “ComponentTheme” from the “Theme” in the context', () => {
+        const INSTANCE = shallow(
+          <SomeComponent/>,
+          CONTEXT
+        ).instance()
+        expect(INSTANCE.getComponentTheme())
+          .toEqual(NORMAL_COMPONENT_THEME)
+      })
 
-    it('returns the used “ComponentTheme” when a “Theme” is specified', () => {
-      const INSTANCE = shallow(<SomeComponent theme={NORMAL_THEME}/>)
-        .instance()
-      expect(INSTANCE.getComponentTheme())
-        .toEqual(NORMAL_COMPONENT_THEME)
+      it('returns the “ComponentTheme” specified', () => {
+        const INSTANCE = shallow(
+          <SomeComponent theme={NORMAL_COMPONENT_THEME}/>,
+          CONTEXT
+        )
+          .instance()
+        expect(INSTANCE.getComponentTheme())
+          .toEqual(NORMAL_COMPONENT_THEME)
+      })
+
+      it('returns the used “ComponentTheme” when a “Theme” is specified', () => {
+        const INSTANCE = shallow(
+          <SomeComponent theme={NORMAL_THEME}/>,
+          CONTEXT
+        )
+          .instance()
+        expect(INSTANCE.getComponentTheme())
+          .toEqual(NORMAL_COMPONENT_THEME)
+      })
     })
   })
 
@@ -83,31 +127,45 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     @themeable('SomeComponent')
     class SomeComponent extends Component {}
 
-    it('returns undefined when no “ComponentTheme” or “Theme” is specified', () => {
-      const INSTANCE = shallow(<SomeComponent/>).instance()
-      expect(INSTANCE.getFlair())
-        .toBeUndefined()
+    describe('No theme in the context', () => {
+      it('returns undefined when no “ComponentTheme” or “Theme” is available', () => {
+        const INSTANCE = shallow(<SomeComponent/>).instance()
+        expect(INSTANCE.getFlair())
+          .toBeUndefined()
+      })
+
+      it('returns the expected flairs', () => {
+        for (let [ flairPattern, expected ] of TEST_DATA) {
+          const COMP1 = shallow(
+            <SomeComponent
+              flair={flairPattern}
+              theme={NORMAL_COMPONENT_THEME}
+            />
+          ).instance()
+
+          const COMP2 = shallow(
+            <SomeComponent
+              flair={flairPattern}
+              theme={NORMAL_THEME}
+            />
+          ).instance()
+
+          expect(COMP1.getFlair()).toEqual(expected)
+          expect(COMP2.getFlair()).toEqual(expected)
+        }
+      })
     })
 
-    it('returns the expected flairs', () => {
-      for (let [ flairPattern, expected ] of TEST_DATA) {
-        const COMP1 = shallow(
-          <SomeComponent
-            flair={flairPattern}
-            theme={NORMAL_COMPONENT_THEME}
-          />
-        ).instance()
-
-        const COMP2 = shallow(
-          <SomeComponent
-            flair={flairPattern}
-            theme={NORMAL_THEME}
-          />
-        ).instance()
-
-        expect(COMP1.getFlair()).toEqual(expected)
-        expect(COMP2.getFlair()).toEqual(expected)
-      }
+    describe('There’s a theme in the context', () => {
+      it('returns the expected flairs', () => {
+        for (let [ flairPattern, expected ] of TEST_DATA) {
+          const INSTANCE = shallow(
+            <SomeComponent flair={flairPattern}/>,
+            CONTEXT
+          ).instance()
+          expect(INSTANCE.getFlair()).toEqual(expected)
+        }
+      })
     })
   })
 
@@ -116,7 +174,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     class SomeComponent extends Component {}
 
     describe('No theme in the context', () => {
-      it('returns undefined when no “Theme” is specified', () => {
+      it('returns undefined when no “Theme” is available', () => {
         const INSTANCE = shallow(<SomeComponent/>).instance()
         expect(INSTANCE.getTheme())
           .toBeUndefined()
@@ -138,17 +196,10 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     })
 
     describe('There’s a theme in the context', () => {
-      // The format of the object is not important here, exceptions will be raised
-      // when the system tries to extract the flair or presenter from a invalid
-      // theme.
-      const CONTEXT_THEME = {
-        a: 1, b: 2, c: 3
-      }
-
       it('returns the “Theme” from the context', () => {
         const INSTANCE = shallow(
           <SomeComponent/>,
-          { context: { theme: CONTEXT_THEME }}
+          CONTEXT
         )
           .instance()
         expect(INSTANCE.getTheme())
@@ -158,7 +209,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
       it('returns undefined when a “ComponentTheme” is specified', () => {
         const INSTANCE = shallow(
           <SomeComponent theme={NORMAL_COMPONENT_THEME}/>,
-          { context: { theme: CONTEXT_THEME }}
+          CONTEXT
         )
           .instance()
         expect(INSTANCE.getTheme())
@@ -168,11 +219,11 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
       it('returns the “Theme” specified', () => {
         const INSTANCE = shallow(
           <SomeComponent theme={NORMAL_THEME}/>,
-          { context: { theme: CONTEXT_THEME }}
+          CONTEXT
         )
           .instance()
         expect(INSTANCE.getTheme())
-          .toEqual(NORMAL_THEME)
+          .not.toEqual(CONTEXT_THEME)
       })
     })
   })
@@ -181,122 +232,191 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
     @themeable('SomeComponent')
     class SomeComponent extends Component {}
 
-    it('adds the flairs to “className”', () => {
-      for (let [ flairPattern, expected ] of TEST_DATA) {
-        const COMP1 = shallow(
-          <SomeComponent
-            flair={flairPattern}
-            theme={NORMAL_COMPONENT_THEME}
-          />
-        ).instance()
+    describe('No theme in the context', () => {
+      it('adds the flairs to “className”', () => {
+        for (let [ flairPattern, expected ] of TEST_DATA) {
+          const COMP1 = shallow(
+            <SomeComponent
+              flair={flairPattern}
+              theme={NORMAL_COMPONENT_THEME}
+            />
+          ).instance()
 
-        const COMP2 = shallow(
-          <SomeComponent
-            flair={flairPattern}
-            theme={NORMAL_THEME}
-          />
-        ).instance()
+          const COMP2 = shallow(
+            <SomeComponent
+              flair={flairPattern}
+              theme={NORMAL_THEME}
+            />
+          ).instance()
 
-        expect(COMP1.getPresentableData().props.className).toBe(expected)
-        expect(COMP2.getPresentableData().props.className).toBe(expected)
-      }
+          expect(COMP1.getPresentableData().props.className).toBe(expected)
+          expect(COMP2.getPresentableData().props.className).toBe(expected)
+        }
+      })
+
+      it('adds the flairs to existing “className”', () => {
+        for (let [ flairPattern, expected ] of TEST_DATA) {
+          const COMP1 = shallow(
+            <SomeComponent
+              className="foo bar"
+              flair={flairPattern}
+              theme={NORMAL_COMPONENT_THEME}
+            />
+          ).instance()
+
+          const COMP2 = shallow(
+            <SomeComponent
+              className="foo bar"
+              flair={flairPattern}
+              theme={NORMAL_THEME}
+            />
+          ).instance()
+
+          expect(COMP1.getPresentableData().props.className)
+            .toBe(`foo bar ${expected}`)
+          expect(COMP2.getPresentableData().props.className)
+            .toBe(`foo bar ${expected}`)
+        }
+      })
     })
 
-    it('adds the flairs to existing “className”', () => {
-      for (let [ flairPattern, expected ] of TEST_DATA) {
-        const COMP1 = shallow(
-          <SomeComponent
-            className="foo bar"
-            flair={flairPattern}
-            theme={NORMAL_COMPONENT_THEME}
-          />
-        ).instance()
+    describe('There’s a theme in the context', () => {
+      it('adds the flairs to “className”', () => {
+        for (let [ flairPattern, expected ] of TEST_DATA) {
+          const INSTANCE = shallow(
+            <SomeComponent flair={flairPattern}/>,
+            CONTEXT
+          ).instance()
+          expect(INSTANCE.getPresentableData().props.className).toBe(expected)
+        }
+      })
 
-        const COMP2 = shallow(
-          <SomeComponent
-            className="foo bar"
-            flair={flairPattern}
-            theme={NORMAL_THEME}
-          />
-        ).instance()
-
-        expect(COMP1.getPresentableData().props.className)
-          .toBe(`foo bar ${expected}`)
-        expect(COMP2.getPresentableData().props.className)
-          .toBe(`foo bar ${expected}`)
-      }
+      it('adds the flairs to existing “className”', () => {
+        for (let [ flairPattern, expected ] of TEST_DATA) {
+          const INSTANCE = shallow(
+            <SomeComponent
+              className="foo bar"
+              flair={flairPattern}
+            />,
+            CONTEXT
+          ).instance()
+          expect(INSTANCE.getPresentableData().props.className)
+            .toBe(`foo bar ${expected}`)
+        }
+      })
     })
   })
 
   describe('Method “getPresenter”', () => {
-    describe('It has a default presenter', () => {
-      class SomePresenter extends Component {
-        render() {
-          return <div>Default presenter!</div>
+    describe('No theme in the context', () => {
+      describe('It has a default presenter', () => {
+        class SomePresenter extends Component {
+          render() {
+            return <div>Default presenter!</div>
+          }
         }
-      }
 
-      @themeable('SomeComponent')
-      @defaultPresenter(SomePresenter)
-      class SomeComponent extends Component {}
+        @themeable('SomeComponent')
+        @defaultPresenter(SomePresenter)
+        class SomeComponent extends Component {}
 
-      it('returns the default presenter', () => {
-        const INSTANCE = shallow(<SomeComponent/>).instance()
-        expect(INSTANCE.getPresenter())
-          .toBe(SomePresenter)
+        it('returns the default presenter', () => {
+          const INSTANCE = shallow(<SomeComponent/>).instance()
+          expect(INSTANCE.getPresenter())
+            .toBe(SomePresenter)
+        })
+
+        it('returns the expected presenter', () => {
+          for (let [ flairPattern, , presenter ] of TEST_DATA) {
+            const COMP1 = shallow(
+              <SomeComponent
+                flair={flairPattern}
+                theme={NORMAL_COMPONENT_THEME}
+              />
+            ).instance()
+
+            const COMP2 = shallow(
+              <SomeComponent
+                flair={flairPattern}
+                theme={NORMAL_THEME}
+              />
+            ).instance()
+
+            expect(COMP1.getPresenter()).toBe(presenter)
+            expect(COMP2.getPresenter()).toBe(presenter)
+          }
+        })
       })
 
-      it('returns the expected presenter', () => {
-        for (let [ flairPattern, , presenter ] of TEST_DATA) {
-          const COMP1 = shallow(
-            <SomeComponent
-              flair={flairPattern}
-              theme={NORMAL_COMPONENT_THEME}
-            />
-          ).instance()
+      describe('It does not have a default presenter', () => {
+        @themeable('SomeComponent')
+        class SomeComponent extends Component {}
 
-          const COMP2 = shallow(
-            <SomeComponent
-              flair={flairPattern}
-              theme={NORMAL_THEME}
-            />
-          ).instance()
+        it('returns undefined when no “ComponentTheme” or “Theme” is available', () => {
+          const INSTANCE = shallow(<SomeComponent/>).instance()
+          expect(INSTANCE.getPresenter())
+            .toBeUndefined()
+        })
 
-          expect(COMP1.getPresenter()).toBe(presenter)
-          expect(COMP2.getPresenter()).toBe(presenter)
-        }
+        it('returns the expected presenter', () => {
+          for (let [ flairPattern, , presenter ] of TEST_DATA) {
+            const COMP1 = shallow(
+              <SomeComponent
+                flair={flairPattern}
+                theme={NORMAL_COMPONENT_THEME}
+              />
+            ).instance()
+
+            const COMP2 = shallow(
+              <SomeComponent
+                flair={flairPattern}
+                theme={NORMAL_THEME}
+              />
+            ).instance()
+
+            expect(COMP1.getPresenter()).toBe(presenter)
+            expect(COMP2.getPresenter()).toBe(presenter)
+          }
+        })
       })
     })
 
-    describe('It does not have a default presenter', () => {
-      @themeable('SomeComponent')
-      class SomeComponent extends Component {}
+    describe('There’s a theme in the context', () => {
+      describe('It has a default presenter', () => {
+        class SomePresenter extends Component {
+          render() {
+            return <div>Default presenter!</div>
+          }
+        }
 
-      it('returns undefined', () => {
-        const INSTANCE = shallow(<SomeComponent/>).instance()
-        expect(INSTANCE.getPresenter())
-          .toBeUndefined()
+        @themeable('SomeComponent')
+        @defaultPresenter(SomePresenter)
+        class SomeComponent extends Component {}
+
+        it('returns the expected presenter', () => {
+          for (let [ flairPattern, , presenter ] of TEST_DATA) {
+            const INSTANCE = shallow(
+              <SomeComponent flair={flairPattern}/>,
+              CONTEXT
+            ).instance()
+            expect(INSTANCE.getPresenter()).toBe(presenter)
+          }
+        })
       })
 
-      it('returns the expected presenter', () => {
-        for (let [ flairPattern, , presenter ] of TEST_DATA) {
-          const COMP1 = shallow(
-            <SomeComponent
-              flair={flairPattern}
-              theme={NORMAL_COMPONENT_THEME}
-            />
-          ).instance()
+      describe('It does not have a default presenter', () => {
+        @themeable('SomeComponent')
+        class SomeComponent extends Component {}
 
-          const COMP2 = shallow(
-            <SomeComponent
-              flair={flairPattern}
-              theme={NORMAL_THEME}
-            />
-          ).instance()
-
-          expect(COMP1.getPresenter()).toBe(presenter)
-          expect(COMP2.getPresenter()).toBe(presenter)
-        }
+        it('returns the expected presenter', () => {
+          for (let [ flairPattern, , presenter ] of TEST_DATA) {
+            const INSTANCE = shallow(
+              <SomeComponent flair={flairPattern}/>,
+              CONTEXT
+            ).instance()
+            expect(INSTANCE.getPresenter()).toBe(presenter)
+          }
+        })
       })
     })
   })

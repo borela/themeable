@@ -154,6 +154,18 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           expect(COMP2.getFlair()).toEqual(expected)
         }
       })
+
+      it('Throws when the specified flair is not found', () => {
+        expect(() => {
+          const INSTANCE = shallow(
+            <SomeComponent
+              flair="unknownFlair"
+              theme={NORMAL_THEME}
+            />
+          ).instance()
+          INSTANCE.getFlair()
+        }).toThrowErrorMatchingSnapshot()
+      })
     })
 
     describe('There’s a theme in the context', () => {
@@ -165,6 +177,16 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           ).instance()
           expect(INSTANCE.getFlair()).toEqual(expected)
         }
+      })
+
+      it('Throws when the specified flair is not found', () => {
+        expect(() => {
+          const INSTANCE = shallow(
+            <SomeComponent flair="unknownFlair"/>,
+            CONTEXT
+          ).instance()
+          INSTANCE.getFlair()
+        }).toThrowErrorMatchingSnapshot()
       })
     })
   })
@@ -346,6 +368,18 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             expect(COMP2.getPresenter()).toBe(presenter)
           }
         })
+
+        it('Throws when the specified presenter is not found', () => {
+          expect(() => {
+            const INSTANCE = shallow(
+              <SomeComponent
+                flair="!unknownPresenter"
+                theme={NORMAL_THEME}
+              />
+            ).instance()
+            INSTANCE.getPresenter()
+          }).toThrowErrorMatchingSnapshot()
+        })
       })
 
       describe('It does not have a default presenter', () => {
@@ -378,6 +412,18 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             expect(COMP2.getPresenter()).toBe(presenter)
           }
         })
+
+        it('Throws when the specified presenter is not found', () => {
+          expect(() => {
+            const INSTANCE = shallow(
+              <SomeComponent
+                flair="!unknownPresenter"
+                theme={NORMAL_THEME}
+              />
+            ).instance()
+            INSTANCE.getPresenter()
+          }).toThrowErrorMatchingSnapshot()
+        })
       })
     })
 
@@ -402,6 +448,16 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             expect(INSTANCE.getPresenter()).toBe(presenter)
           }
         })
+
+        it('Throws when the specified presenter is not found', () => {
+          expect(() => {
+            const INSTANCE = shallow(
+              <SomeComponent flair="!unknownPresenter"/>,
+              CONTEXT
+            ).instance()
+            INSTANCE.getPresenter()
+          }).toThrowErrorMatchingSnapshot()
+        })
       })
 
       describe('It does not have a default presenter', () => {
@@ -416,6 +472,16 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             ).instance()
             expect(INSTANCE.getPresenter()).toBe(presenter)
           }
+        })
+
+        it('Throws when the specified presenter is not found', () => {
+          expect(() => {
+            const INSTANCE = shallow(
+              <SomeComponent flair="!unknownPresenter"/>,
+              CONTEXT
+            ).instance()
+            INSTANCE.getPresenter()
+          }).toThrowErrorMatchingSnapshot()
         })
       })
     })

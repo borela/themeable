@@ -1,6 +1,6 @@
 {
   "name": "themeable",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Decorator to enable theming for ReactJS components.",
   "license": "Apache-2.0",
   "main": "build",

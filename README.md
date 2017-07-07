@@ -246,7 +246,7 @@ be used to change the appearance and structure of a themeable component.
 be aggregated in the presentable’s *“className”* property passed to the presenter.
 
 **Flair attribute:** Attribute used by the themeable component to select the flair
-and the presenter using the format **“flair!presenter”**. Multiple flairs can
+and the presenter using the format *“flair!presenter”*. Multiple flairs can
 be used and the “!presenter” part can be ommitted entirely.
 
 ### How the “ComponentTheme” is resolved

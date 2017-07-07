@@ -53,7 +53,7 @@ class DefaultPresenter extends Component {
 
 ### Themeable button
 
-If the **“ComponentTheme”** lacks a default presenter, the themeable will try to
+If the *“ComponentTheme”* lacks a default presenter, the themeable will try to
 use its default presenter. Let’s create our themeable button:
 
 ```js
@@ -106,7 +106,7 @@ That’s nice but we might need to set different CSS classes for animated vs sta
 buttons and on top of that, we need a way to pass all this data to our themeable
 component.
 
-To achieve that, we’ll create our first **“ComponentTheme”**:
+To achieve that, we’ll create our first *“ComponentTheme”*:
 
 ```js
 // This is a ”ComponentTheme”.
@@ -180,7 +180,7 @@ for each component would be tedious, to solve that, we need to create a theme th
 bundles multiple component themes:
 
 ```js
-// This is a ”Theme” and it might contain many “ComponentThemes”.
+// This is a ”Theme” and it might contain many “ComponentTheme”.
 const AWESOME_THEME = {
   // Optional metadata.
   name: 'Awesome Theme',
@@ -190,7 +190,7 @@ const AWESOME_THEME = {
     name: 'Foo Bar',
     email: 'foo@bar.com'
   },
-  // Actual themes.
+  // Actual themes that can be used by the themeable component.
   componentThemes: {
     // Remember that we typed the decorator like “@themeable('myAwesomeButton')”?
     // That identifier is used here because we can bundle many “ComponentThemes”
@@ -206,9 +206,9 @@ The theme is created, we just need to make it available for the components:
 <ContextTheme theme={AWESOME_THEME}>
   <div>
     <div>
+      {/* Default flair and presenter. */}
+      <Button/>
       <div>
-        {/* Default flair and presenter. */}
-        <Button/>
         {/* Default presenter. */}
         <Button flair="blue"/>
         {/* Default flair. */}
@@ -222,7 +222,7 @@ The theme is created, we just need to make it available for the components:
 </ContextTheme>
 ```
 
-Not that it does not matter how deep the component is in the tree, the theme will
+Note that it does not matter how deep the component is in the tree, the theme will
 be available in the context for all children. That's it, now you could pack your
 theme into its own package and reuse it in other projects.
 
@@ -237,29 +237,29 @@ presentable.][presentable]
 **Themeable:** A decorated ReactJS component that supports theming. A themeable
 component is also presentable and has all the features presentables has.
 
-**Theme:** An object that has metadata and a collection of **“ComponentThemes”**.
+**Theme:** An object that has metadata and a collection of *“ComponentThemes”*.
 
-**ComponentTheme:** An object that has **“flairs”** and **“presenters”** that can
+**ComponentTheme:** An object that has *“flairs”* and *“presenters”* that can
 be used to change the appearance and structure of a themeable component.
 
 **Flair:** Is a string or array of strings containing the CSS classes that will
-be aggregated in the presentable’s **“className”** property passed to the presenter.
+be aggregated in the presentable’s *“className”* property passed to the presenter.
 
 **Flair attribute:** Attribute used by the themeable component to select the flair
 and the presenter using the format **“flair!presenter”**. Multiple flairs can
 be used and the “!presenter” part can be ommitted entirely.
 
-## How the “ComponentTheme” is resolved
+### How the “ComponentTheme” is resolved
 
-1. **Direct attribute “theme”:** This attribute can accept either a **“Theme”**
-  or a **“ComponentTheme”**.
+1. **Direct attribute “theme”:** This attribute can accept either a *“Theme”*
+  or a *“ComponentTheme”*.
 
-2. **Context attribute “theme”:** It only accepts **“Theme”** objects. This
-  attribute is set by the **“ContextTheme”** component.
+2. **Context attribute “theme”:** It only accepts *“Theme”* objects. This
+  attribute is set by the *“ContextTheme”* component.
 
 ## Notes
 
-* The **“Theme”** can be passed directly to the component just like the **“ComponentTheme”**.
+* The *“Theme”* can be passed directly to the component just like the *“ComponentTheme”*.
 * You can override the theme available in the context by using nested theme providers:
   ```js
   <ContextTheme theme={AWESOME_THEME}>

@@ -140,8 +140,8 @@ We can already use that directly into the button:
 // Result: <div class="blue flat thickBorders">Static presenter set from theme!</div>
 ```
 
-As you can see, the component used the default flair and presenter. That's cool
-and all, but what if we want to use a specific flair/presenter?
+As you can see, the component used the default flair and presenter. To use a
+specific flair/presenter:
 
 ```js
 // The presenter is omitted, so the default one will be used.

@@ -14,7 +14,7 @@ import BarPresenter from './BarPresenter'
 import FooPresenter from './FooPresenter'
 import pad from 'pad'
 
-function generateCombinedData(flairs, presenters) {
+function combinedData(flairs, presenters) {
   let result = []
   for (let [ flairPattern, flair ] of flairs) {
     for (let [ presenterPattern, presenter ] of presenters)
@@ -23,9 +23,14 @@ function generateCombinedData(flairs, presenters) {
   return result
 }
 
-function generateJoinedData(data) {
+function joinFlairs(data) {
   let result = []
   for (let [ targetStringArray, ...rest ] of data) {
+    if (targetStringArray.length < 2) {
+      result.push([ targetStringArray, ...rest ])
+      continue
+    }
+
     for (let i = 1; i < 3; i++) {
       const SEPARATOR = pad('', i)
       result.push([ targetStringArray.join(SEPARATOR), ...rest ])
@@ -34,7 +39,7 @@ function generateJoinedData(data) {
   return result
 }
 
-function generatePaddedData(data) {
+function padData(data) {
   let result = []
   for (let [ targetString, ...rest ] of data) {
     for (let i = 1; i < 3; i++) {
@@ -51,7 +56,7 @@ const NORMALIZED_GREEN_FLAIR = 'greenA greenB greenC'
 const NORMALIZED_RED_GREEN_FLAIRS = 'redA redB redC greenA greenB greenC'
 const NORMALIZED_GREEN_RED_FLAIRS = 'greenA greenB greenC redA redB redC'
 
-const FLAIRS = [
+const RAW_FLAIRS = [
   // Default flair.
   [[ '' ], NORMALIZED_BLUE_FLAIR ],
   // Specific flairs.
@@ -69,15 +74,17 @@ const PRESENTERS = [
   [ 'foo', FooPresenter ]
 ]
 
-const JOINED_FLAIRS = generateJoinedData(FLAIRS)
-const PADDED_FLAIRS = generatePaddedData(JOINED_FLAIRS)
-const PADDED_PRESENTERS = generatePaddedData(PRESENTERS)
-const COMBINED_DATA = generateCombinedData(
-  [ ...JOINED_FLAIRS, ...PADDED_FLAIRS ],
+const FLAIRS = joinFlairs(RAW_FLAIRS)
+const PADDED_FLAIRS = padData(FLAIRS)
+const PADDED_PRESENTERS = padData(PRESENTERS)
+const COMBINED_DATA = combinedData(
+  [ ...FLAIRS, ...PADDED_FLAIRS ],
   [ ...PRESENTERS, ...PADDED_PRESENTERS ]
 )
 
 export const TEST_DATA = [
+  // No flair pattern.
   [ undefined, NORMALIZED_BLUE_FLAIR, BarPresenter ],
+  // Other combinations.
   ...COMBINED_DATA
 ]

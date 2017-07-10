@@ -11,7 +11,6 @@
 // the License.
 // @flow
 
-import type { Theme } from './Theme'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { isPresentable, presentable } from 'presentable'
@@ -20,10 +19,9 @@ const SYMBOL = Symbol.for('themeable')
 const FLAIR_PATTERN = /^(\w+(?:\s+\w+)*)\s*!?/
 const PRESENTER_PATTERN = /!\s*(\w+)$/
 
-function extractComponentTheme(theme:Theme, identifier) {
-  return theme.componentThemes[identifier]
-}
-
+/**
+ * Checks if an object has the format of a “Theme’, not a “ComponentTheme”.
+ */
 function isTheme(target) {
   return target && target.componentThemes !== undefined
 }
@@ -58,7 +56,7 @@ export function themeable(identifier:string) {
     prototype.getComponentTheme = function() {
       let { theme = this.context.theme } = this.props
       return isTheme(theme)
-        ? extractComponentTheme(theme, identifier)
+        ? theme.componentThemes[identifier]
         : theme
     }
 
@@ -114,8 +112,8 @@ export function themeable(identifier:string) {
 
       let result = COMPONENT_THEME.presenters[presenter]
       if (result === undefined) {
-        const THEME = this.getTheme()
-        throw new Error(`Presenter “${presenter}” is not defined for “${identifier}” on theme “${THEME.name}”.`)
+        const { name: THEME_NAME = '' } = this.getTheme()
+        throw new Error(`Presenter “${presenter}” is not defined for “${identifier}” on theme “${THEME_NAME}”.`)
       }
       return result
     }
@@ -145,10 +143,10 @@ export function themeable(identifier:string) {
     }
 
     prototype.getTheme = function() {
-      let { theme } = this.props
-      if (!theme)
+      const { theme: THEME } = this.props
+      if (!THEME)
         return this.context.theme
-      return isTheme(theme) ? theme : undefined
+      return isTheme(THEME) ? THEME : undefined
     }
 
     return targetComponent

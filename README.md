@@ -1,4 +1,4 @@
-Decorator to enable theming for ReactJS components.
+Decorator to enable theming on ReactJS components.
 
 ## Table of contents
 

@@ -12,6 +12,6 @@
 
 export * from './themeable'
 export { ComponentTheme } from './ComponentTheme'
-export { ContextTheme } from './ContextTheme'
 export { isThemeable } from './isThemeable'
 export { Theme } from './Theme'
+export { ThemeableContext } from './ThemeableContext'

@@ -27,7 +27,7 @@ In this example, we will create a themeable button component.
 ```js
 import React, { Component } from 'react'
 import { defaultPresenter } from 'presentable'
-import { ContextTheme, themeable } from 'themeable'
+import { ThemeableContext, themeable } from 'themeable'
 ```
 
 ### Default presenter
@@ -203,7 +203,7 @@ const AWESOME_THEME = {
 The theme is created, we just need to make it available for the components:
 
 ```js
-<ContextTheme theme={AWESOME_THEME}>
+<ThemeableContext theme={AWESOME_THEME}>
   <div>
     <div>
       {/* Default flair and presenter. */}
@@ -219,7 +219,7 @@ The theme is created, we just need to make it available for the components:
       </div>
     </div>
   </div>
-</ContextTheme>
+</ThemeableContext>
 ```
 
 Note that it does not matter how deep the component is in the tree, the theme will
@@ -255,20 +255,20 @@ be used and the “!presenter” part can be ommitted entirely.
   or a *“ComponentTheme”*.
 
 2. **Context attribute “theme”:** It only accepts *“Theme”* objects. This
-  attribute is set by the *“ContextTheme”* component.
+  attribute is set by the *“ThemeableContext”* component.
 
 ## Notes
 
 * The *“Theme”* can be passed directly to the component just like the *“ComponentTheme”*.
 * You can override the theme available in the context by using nested theme providers:
   ```js
-  <ContextTheme theme={AWESOME_THEME}>
+  <ThemeableContext theme={AWESOME_THEME}>
     <div>
       {/* Themeable components here will use “AWESOME_THEME”. */}
       <Button/>
       <Button flair="blue"/>
       <Button flair="!animated"/>
-      <ContextTheme theme={ANOTHER_AWESOME_THEME}>
+      <ThemeableContext theme={ANOTHER_AWESOME_THEME}>
         {/* Themeable components here will use “ANOTHER_AWESOME_THEME”. */}
         <div>
           <div>
@@ -276,9 +276,9 @@ be used and the “!presenter” part can be ommitted entirely.
             <Button flair="blue!static"/>
           </div>
         </div>
-      </ContextTheme>
+      </ThemeableContext>
     </div>
-  </ContextTheme>
+  </ThemeableContext>
   ```
 
 [presentable]:https://github.com/borela/presentable

@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "babel-preset-ctrine-web-lib": "^1.6.1",
-    "ctrine-dev-preset": "^4.0.0",
+    "ctrine-dev-preset": "^4.2.1",
     "pad": "^1.1.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"

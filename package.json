@@ -1,6 +1,6 @@
 {
   "name": "themeable",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Decorator to enable theming on ReactJS components.",
   "license": "Apache-2.0",
   "main": "build",
@@ -34,6 +34,10 @@
     "email": "alexandre@borela.tech",
     "url": "http://www.borela.tech"
   },
+  "dependencies": {
+    "presentable": "^3.3.0",
+    "prop-types": "^15.5.10"
+  },
   "devDependencies": {
     "babel-preset-ctrine-web-lib": "^1.6.1",
     "ctrine-dev-preset": "^4.2.1",
@@ -43,9 +47,5 @@
   },
   "peerDependencies": {
     "react": "^15.6.1"
-  },
-  "dependencies": {
-    "presentable": "^3.3.0",
-    "prop-types": "^15.5.10"
   }
 }

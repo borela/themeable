@@ -119,11 +119,9 @@ export function themeable(identifier:string) {
     }
 
     // Used to filter the “theme” and “flair” attributes.
+    let oldGetPresentableData = prototype.getPresentableData
     prototype.getPresentableData = function() {
-      let result = {
-        props: { ...this.props },
-        state: { ...this.state }
-      }
+      let result = oldGetPresentableData.call(this)
 
       const RESOLVED_FLAIR = result.className
         ? `${this.getFlair()} ${result.className}`
@@ -137,7 +135,6 @@ export function themeable(identifier:string) {
       }
 
       delete result.props.flair
-      delete result.props.presenter
       delete result.props.theme
       return result
     }

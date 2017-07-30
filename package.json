@@ -39,8 +39,8 @@
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
-    "babel-preset-ctrine-web-lib": "^1.6.1",
-    "ctrine-dev-preset": "^4.2.1",
+    "@ctrine/babel-preset-lib": "^3.0.0",
+    "@ctrine/toolbox": "^6.0.0",
     "pad": "^1.1.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"

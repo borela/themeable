@@ -164,7 +164,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             />
           ).instance()
           INSTANCE.getFlair()
-        }).toThrowErrorMatchingSnapshot()
+        }).toThrowError('Flair “unknownFlair” is not defined for “SomeComponent” on theme “Awesome”.')
       })
     })
 
@@ -186,7 +186,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             CONTEXT
           ).instance()
           INSTANCE.getFlair()
-        }).toThrowErrorMatchingSnapshot()
+        }).toThrowError('Flair “unknownFlair” is not defined for “SomeComponent” on theme “Awesome”.')
       })
     })
   })
@@ -378,7 +378,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
               />
             ).instance()
             INSTANCE.getPresenter()
-          }).toThrowErrorMatchingSnapshot()
+          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
         })
       })
 
@@ -422,7 +422,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
               />
             ).instance()
             INSTANCE.getPresenter()
-          }).toThrowErrorMatchingSnapshot()
+          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
         })
       })
     })
@@ -456,7 +456,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
               CONTEXT
             ).instance()
             INSTANCE.getPresenter()
-          }).toThrowErrorMatchingSnapshot()
+          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
         })
       })
 
@@ -481,7 +481,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
               CONTEXT
             ).instance()
             INSTANCE.getPresenter()
-          }).toThrowErrorMatchingSnapshot()
+          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
         })
       })
     })

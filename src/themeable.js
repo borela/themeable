@@ -118,9 +118,19 @@ export function themeable(identifier:string) {
       return result
     }
 
-    // Used to filter the “theme” and “flair” attributes.
+    prototype.getTheme = function() {
+      const { theme: THEME } = this.props
+      if (!THEME)
+        return this.context.theme
+      return isTheme(THEME) ? THEME : undefined
+    }
+
+    // Used to combine the presentable’s data with the new attributes from the
+    // themeable logic.
     let oldGetPresentableData = prototype.getPresentableData
-    prototype.getPresentableData = function() {
+
+    // The actual logic that combines the data.
+    prototype.getDefaultThemeableData = function() {
       let result = oldGetPresentableData.call(this)
 
       const RESOLVED_FLAIR = result.className
@@ -139,11 +149,9 @@ export function themeable(identifier:string) {
       return result
     }
 
-    prototype.getTheme = function() {
-      const { theme: THEME } = this.props
-      if (!THEME)
-        return this.context.theme
-      return isTheme(THEME) ? THEME : undefined
+    // Replace the data hook point to get the combined data.
+    prototype.getPresentableData = function() {
+      return this.getDefaultThemeableData()
     }
 
     return targetComponent

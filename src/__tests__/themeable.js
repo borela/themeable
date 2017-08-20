@@ -23,7 +23,7 @@ const CONTEXT_THEME = {
   a: 1, b: 2, c: 3
 }
 
-const CONTEXT = {
+const OPTIONS = {
   context: {
     theme: CONTEXT_THEME
   }
@@ -95,7 +95,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
       it('returns the used “ComponentTheme” from the “Theme” in the context', () => {
         const INSTANCE = shallow(
           <SomeComponent/>,
-          CONTEXT
+          OPTIONS
         ).instance()
         expect(INSTANCE.getComponentTheme())
           .toEqual(NORMAL_COMPONENT_THEME)
@@ -104,7 +104,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
       it('returns the “ComponentTheme” specified', () => {
         const INSTANCE = shallow(
           <SomeComponent theme={NORMAL_COMPONENT_THEME}/>,
-          CONTEXT
+          OPTIONS
         )
           .instance()
         expect(INSTANCE.getComponentTheme())
@@ -114,7 +114,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
       it('returns the used “ComponentTheme” when a “Theme” is specified', () => {
         const INSTANCE = shallow(
           <SomeComponent theme={NORMAL_THEME}/>,
-          CONTEXT
+          OPTIONS
         )
           .instance()
         expect(INSTANCE.getComponentTheme())
@@ -173,7 +173,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
         for (let [ flairPattern, expected ] of TEST_DATA) {
           const INSTANCE = shallow(
             <SomeComponent flair={flairPattern}/>,
-            CONTEXT
+            OPTIONS
           ).instance()
           expect(INSTANCE.getFlair()).toEqual(expected)
         }
@@ -183,7 +183,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
         expect(() => {
           const INSTANCE = shallow(
             <SomeComponent flair="unknownFlair"/>,
-            CONTEXT
+            OPTIONS
           ).instance()
           INSTANCE.getFlair()
         }).toThrowError('Flair “unknownFlair” is not defined for “SomeComponent” on theme “Awesome”.')
@@ -221,7 +221,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
       it('returns the “Theme” from the context', () => {
         const INSTANCE = shallow(
           <SomeComponent/>,
-          CONTEXT
+          OPTIONS
         )
           .instance()
         expect(INSTANCE.getTheme())
@@ -231,7 +231,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
       it('returns undefined when a “ComponentTheme” is specified', () => {
         const INSTANCE = shallow(
           <SomeComponent theme={NORMAL_COMPONENT_THEME}/>,
-          CONTEXT
+          OPTIONS
         )
           .instance()
         expect(INSTANCE.getTheme())
@@ -241,7 +241,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
       it('returns the “Theme” specified', () => {
         const INSTANCE = shallow(
           <SomeComponent theme={NORMAL_THEME}/>,
-          CONTEXT
+          OPTIONS
         )
           .instance()
         expect(INSTANCE.getTheme())
@@ -307,7 +307,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
         for (let [ flairPattern, expected ] of TEST_DATA) {
           const INSTANCE = shallow(
             <SomeComponent flair={flairPattern}/>,
-            CONTEXT
+            OPTIONS
           ).instance()
           expect(INSTANCE.getPresentableData().props.className).toBe(expected)
         }
@@ -320,7 +320,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
               className="foo bar"
               flair={flairPattern}
             />,
-            CONTEXT
+            OPTIONS
           ).instance()
           expect(INSTANCE.getPresentableData().props.className)
             .toBe(`foo bar ${expected}`)
@@ -443,7 +443,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           for (let [ flairPattern, , presenter ] of TEST_DATA) {
             const INSTANCE = shallow(
               <SomeComponent flair={flairPattern}/>,
-              CONTEXT
+              OPTIONS
             ).instance()
             expect(INSTANCE.getPresenter()).toBe(presenter)
           }
@@ -453,7 +453,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           expect(() => {
             const INSTANCE = shallow(
               <SomeComponent flair="!unknownPresenter"/>,
-              CONTEXT
+              OPTIONS
             ).instance()
             INSTANCE.getPresenter()
           }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
@@ -468,7 +468,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           for (let [ flairPattern, , presenter ] of TEST_DATA) {
             const INSTANCE = shallow(
               <SomeComponent flair={flairPattern}/>,
-              CONTEXT
+              OPTIONS
             ).instance()
             expect(INSTANCE.getPresenter()).toBe(presenter)
           }
@@ -478,7 +478,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           expect(() => {
             const INSTANCE = shallow(
               <SomeComponent flair="!unknownPresenter"/>,
-              CONTEXT
+              OPTIONS
             ).instance()
             INSTANCE.getPresenter()
           }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')

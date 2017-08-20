@@ -149,9 +149,14 @@ export function themeable(identifier:string) {
       return result
     }
 
-    // Replace the data hook point to get the combined data.
-    if (!prototype.getPresentableData) {
-      prototype.getPresentableData = function() {
+    // Implement the presentable data hook.
+    prototype.getPresentableData = function() {
+      return this.getThemeableData()
+    }
+
+    // Add themeable hook.
+    if (!prototype.getThemeableData) {
+      prototype.getThemeableData = function() {
         return this.getDefaultThemeableData()
       }
     }

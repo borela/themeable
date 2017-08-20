@@ -150,8 +150,10 @@ export function themeable(identifier:string) {
     }
 
     // Replace the data hook point to get the combined data.
-    prototype.getPresentableData = function() {
-      return this.getDefaultThemeableData()
+    if (prototype.getPresentableData) {
+      prototype.getPresentableData = function() {
+        return this.getDefaultThemeableData()
+      }
     }
 
     return targetComponent

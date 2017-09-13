@@ -11,6 +11,7 @@
 // the License.
 // @flow
 
+import isThemeable from './isThemeable'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { isPresentable, presentable } from 'presentable'
@@ -40,6 +41,15 @@ export function themeable(identifier:string) {
 
     let prototype = targetComponent.prototype
 
+    // Allow the identifier to be modified without affecting an already themeable
+    // component.
+    prototype.getThemeableIdentifier = function() {
+      return identifier
+    }
+
+    if (isThemeable(targetComponent))
+      return
+
     // The theme attribute in the context will be defined by the “ContextTheme”
     // component.
     if (!targetComponent.contextTypes)
@@ -56,7 +66,7 @@ export function themeable(identifier:string) {
     prototype.getComponentTheme = function() {
       let { theme = this.context.theme } = this.props
       return isTheme(theme)
-        ? theme.componentThemes[identifier]
+        ? theme.componentThemes[this.getThemeableIdentifier()]
         : theme
     }
 
@@ -83,7 +93,7 @@ export function themeable(identifier:string) {
 
         if (extracted === undefined) {
           const THEME = this.getTheme()
-          throw new Error(`Flair “${TARGET}” is not defined for “${identifier}” on theme “${THEME.name}”.`)
+          throw new Error(`Flair “${TARGET}” is not defined for “${this.getThemeableIdentifier()}” on theme “${THEME.name}”.`)
         }
 
         if (Array.isArray(extracted))
@@ -113,7 +123,7 @@ export function themeable(identifier:string) {
       let result = COMPONENT_THEME.presenters[presenter]
       if (result === undefined) {
         const { name: THEME_NAME = '' } = this.getTheme()
-        throw new Error(`Presenter “${presenter}” is not defined for “${identifier}” on theme “${THEME_NAME}”.`)
+        throw new Error(`Presenter “${presenter}” is not defined for “${this.getThemeableIdentifier()}” on theme “${THEME_NAME}”.`)
       }
       return result
     }

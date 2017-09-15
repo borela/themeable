@@ -27,13 +27,7 @@ function isTheme(target) {
   return target && target.componentThemes !== undefined
 }
 
-/**
- * Enables theming support for a ReactJS component.
- *
- * @param identifier
- * A unique identifier used to select the “ComponentTheme” inside the “Theme”.
- */
-export function themeable(identifier:string) {
+function decorateComponent(identifier:string) {
   return (targetComponent:Class<Component>) => {
     // Modify the target component to enable support for presenters if necessary.
     if (!isPresentable(targetComponent))
@@ -173,6 +167,22 @@ export function themeable(identifier:string) {
 
     return targetComponent
   }
+}
+
+/**
+ * Enables theming support for a ReactJS component.
+ *
+ * @param identifierOrComponent
+ * A unique identifier used to select the “ComponentTheme” inside the “Theme” or
+ * the component to enable theming. If the component has no identifier, it’ll
+ * only support themes passed directly to it.
+ */
+export function themeable(identifierOrComponent:string|Class<Component>) {
+  // It’s an identifier.
+  if (typeof(identifierOrComponent) === 'string')
+    return decorateComponent(identifierOrComponent)
+  // It’s a component.
+  return decorateComponent('...')(identifierOrComponent)
 }
 
 export default themeable

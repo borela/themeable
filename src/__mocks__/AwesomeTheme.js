@@ -25,7 +25,7 @@ const METADATA = {
 export const NORMAL = {
   ...METADATA,
   componentThemes: {
-    SomeComponent: NORMAL_COMPONENT_THEME
+    'custom-string': NORMAL_COMPONENT_THEME
   }
 }
 

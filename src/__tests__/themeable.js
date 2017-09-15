@@ -29,9 +29,9 @@ const OPTIONS = {
   }
 }
 
-describe('Decorator themeable applied on “SomeComponent”', () => {
+describe('Decorator themeable applied on “SomeComponent” without an identifier', () => {
   describe('Presentable already', () => {
-    @themeable('SomeComponent')
+    @themeable
     @presentable
     class SomeComponent extends Component {}
 
@@ -45,7 +45,44 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
   })
 
   describe('Not presentable yet', () => {
-    @themeable('SomeComponent')
+    @themeable
+    class SomeComponent extends Component {}
+
+    it('has the same constructor', () => {
+      const INSTANCE = shallow(<SomeComponent/>).instance()
+      expect(INSTANCE instanceof SomeComponent)
+        .toBe(true)
+      expect(Object.getPrototypeOf(INSTANCE).constructor)
+        .toBe(SomeComponent)
+    })
+
+    it('becomes presentable too', () => {
+      const INSTANCE = shallow(<SomeComponent/>).instance()
+      expect(isPresentable(SomeComponent))
+        .toBe(true)
+      expect(isPresentable(INSTANCE))
+        .toBe(true)
+    })
+  })
+})
+
+describe('Decorator themeable applied on “SomeComponent”', () => {
+  describe('Presentable already', () => {
+    @themeable('custom-string')
+    @presentable
+    class SomeComponent extends Component {}
+
+    it('has the same constructor', () => {
+      const INSTANCE = shallow(<SomeComponent/>).instance()
+      expect(INSTANCE instanceof SomeComponent)
+        .toBe(true)
+      expect(Object.getPrototypeOf(INSTANCE).constructor)
+        .toBe(SomeComponent)
+    })
+  })
+
+  describe('Not presentable yet', () => {
+    @themeable('custom-string')
     class SomeComponent extends Component {}
 
     it('has the same constructor', () => {
@@ -66,7 +103,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
   })
 
   describe('Method “getComponentTheme”', () => {
-    @themeable('SomeComponent')
+    @themeable('custom-string')
     class SomeComponent extends Component {}
 
     describe('No theme in the context', () => {
@@ -124,7 +161,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
   })
 
   describe('Method “getFlair”', () => {
-    @themeable('SomeComponent')
+    @themeable('custom-string')
     class SomeComponent extends Component {}
 
     describe('No theme in the context', () => {
@@ -164,7 +201,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             />
           ).instance()
           INSTANCE.getFlair()
-        }).toThrowError('Flair “unknownFlair” is not defined for “SomeComponent” on theme “Awesome”.')
+        }).toThrowError('Flair “unknownFlair” is not defined for “custom-string” on theme “Awesome”.')
       })
     })
 
@@ -186,13 +223,13 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             OPTIONS
           ).instance()
           INSTANCE.getFlair()
-        }).toThrowError('Flair “unknownFlair” is not defined for “SomeComponent” on theme “Awesome”.')
+        }).toThrowError('Flair “unknownFlair” is not defined for “custom-string” on theme “Awesome”.')
       })
     })
   })
 
   describe('Method “getTheme”', () => {
-    @themeable('SomeComponent')
+    @themeable('custom-string')
     class SomeComponent extends Component {}
 
     describe('No theme in the context', () => {
@@ -251,7 +288,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
   })
 
   describe('Method “getPresentableData”', () => {
-    @themeable('SomeComponent')
+    @themeable('custom-string')
     class SomeComponent extends Component {}
 
     describe('No theme in the context', () => {
@@ -338,7 +375,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           }
         }
 
-        @themeable('SomeComponent')
+        @themeable('custom-string')
         @defaultPresenter(SomePresenter)
         class SomeComponent extends Component {}
 
@@ -378,12 +415,12 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
               />
             ).instance()
             INSTANCE.getPresenter()
-          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
+          }).toThrowError('Presenter “unknownPresenter” is not defined for “custom-string” on theme “Awesome”.')
         })
       })
 
       describe('It does not have a default presenter', () => {
-        @themeable('SomeComponent')
+        @themeable('custom-string')
         class SomeComponent extends Component {}
 
         it('returns undefined when no “ComponentTheme” or “Theme” is available', () => {
@@ -422,7 +459,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
               />
             ).instance()
             INSTANCE.getPresenter()
-          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
+          }).toThrowError('Presenter “unknownPresenter” is not defined for “custom-string” on theme “Awesome”.')
         })
       })
     })
@@ -435,7 +472,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           }
         }
 
-        @themeable('SomeComponent')
+        @themeable('custom-string')
         @defaultPresenter(SomePresenter)
         class SomeComponent extends Component {}
 
@@ -456,12 +493,12 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
               OPTIONS
             ).instance()
             INSTANCE.getPresenter()
-          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
+          }).toThrowError('Presenter “unknownPresenter” is not defined for “custom-string” on theme “Awesome”.')
         })
       })
 
       describe('It does not have a default presenter', () => {
-        @themeable('SomeComponent')
+        @themeable('custom-string')
         class SomeComponent extends Component {}
 
         it('returns the expected presenter', () => {
@@ -481,7 +518,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
               OPTIONS
             ).instance()
             INSTANCE.getPresenter()
-          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
+          }).toThrowError('Presenter “unknownPresenter” is not defined for “custom-string” on theme “Awesome”.')
         })
       })
     })

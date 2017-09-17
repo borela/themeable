@@ -16,7 +16,7 @@ import { isThemeable, themeable } from '..'
 describe('Function “isThemeable”', () => {
   class NonThemeable extends Component {}
 
-  @themeable('someIdentifier')
+  @themeable('custom-string')
   class SomeComponent extends Component {}
 
   describe('Used on themeable', () => {

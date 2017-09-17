@@ -16,7 +16,7 @@ import { NORMAL as NORMAL_COMPONENT_THEME } from 'AwesomeComponentTheme'
 import { NORMAL as NORMAL_THEME } from 'AwesomeTheme'
 import { shallow } from 'enzyme'
 import { TEST_DATA } from 'data'
-import { themeable } from '..'
+import { themeable } from '../..'
 
 const CONTEXT_THEME = {
   ...NORMAL_THEME,
@@ -29,9 +29,9 @@ const OPTIONS = {
   }
 }
 
-describe('Decorator themeable applied on “SomeComponent”', () => {
+describe('Decorator themeable applied on “SomeComponent” without an identifier', () => {
   describe('Presentable already', () => {
-    @themeable('SomeComponent')
+    @themeable
     @presentable
     class SomeComponent extends Component {}
 
@@ -45,7 +45,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
   })
 
   describe('Not presentable yet', () => {
-    @themeable('SomeComponent')
+    @themeable
     class SomeComponent extends Component {}
 
     it('has the same constructor', () => {
@@ -66,7 +66,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
   })
 
   describe('Method “getComponentTheme”', () => {
-    @themeable('SomeComponent')
+    @themeable
     class SomeComponent extends Component {}
 
     describe('No theme in the context', () => {
@@ -83,22 +83,22 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           .toEqual(NORMAL_COMPONENT_THEME)
       })
 
-      it('returns the used “ComponentTheme” when a “Theme” is specified', () => {
+      it('returns undefined when a “Theme” is specified', () => {
         const INSTANCE = shallow(<SomeComponent theme={NORMAL_THEME}/>)
           .instance()
         expect(INSTANCE.getComponentTheme())
-          .toEqual(NORMAL_COMPONENT_THEME)
+          .toBeUndefined()
       })
     })
 
     describe('There’s a theme in the context', () => {
-      it('returns the used “ComponentTheme” from the “Theme” in the context', () => {
+      it('returns undefined when no “Theme” or “ComponentTheme” is specified', () => {
         const INSTANCE = shallow(
           <SomeComponent/>,
           OPTIONS
         ).instance()
         expect(INSTANCE.getComponentTheme())
-          .toEqual(NORMAL_COMPONENT_THEME)
+          .toBeUndefined()
       })
 
       it('returns the “ComponentTheme” specified', () => {
@@ -111,20 +111,20 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           .toEqual(NORMAL_COMPONENT_THEME)
       })
 
-      it('returns the used “ComponentTheme” when a “Theme” is specified', () => {
+      it('returns undefined a “Theme” is specified', () => {
         const INSTANCE = shallow(
           <SomeComponent theme={NORMAL_THEME}/>,
           OPTIONS
         )
           .instance()
         expect(INSTANCE.getComponentTheme())
-          .toEqual(NORMAL_COMPONENT_THEME)
+          .toBeUndefined()
       })
     })
   })
 
   describe('Method “getFlair”', () => {
-    @themeable('SomeComponent')
+    @themeable
     class SomeComponent extends Component {}
 
     describe('No theme in the context', () => {
@@ -151,7 +151,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           ).instance()
 
           expect(COMP1.getFlair()).toEqual(expected)
-          expect(COMP2.getFlair()).toEqual(expected)
+          expect(COMP2.getFlair()).toBeUndefined()
         }
       })
 
@@ -160,39 +160,31 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           const INSTANCE = shallow(
             <SomeComponent
               flair="unknownFlair"
-              theme={NORMAL_THEME}
+              theme={NORMAL_COMPONENT_THEME}
             />
           ).instance()
           INSTANCE.getFlair()
-        }).toThrowError('Flair “unknownFlair” is not defined for “SomeComponent” on theme “Awesome”.')
+        }).toThrowError('Flair “unknownFlair” is not defined for the component without identifier “SomeComponent”.')
       })
     })
 
     describe('There’s a theme in the context', () => {
+      // If a component has no identifier, the theme in the context will be
+      // ignored.
       it('returns the expected flairs', () => {
-        for (let [ flairPattern, expected ] of TEST_DATA) {
+        for (let [ flairPattern ] of TEST_DATA) {
           const INSTANCE = shallow(
             <SomeComponent flair={flairPattern}/>,
             OPTIONS
           ).instance()
-          expect(INSTANCE.getFlair()).toEqual(expected)
+          expect(INSTANCE.getFlair()).toBeUndefined()
         }
-      })
-
-      it('Throws when the specified flair is not found', () => {
-        expect(() => {
-          const INSTANCE = shallow(
-            <SomeComponent flair="unknownFlair"/>,
-            OPTIONS
-          ).instance()
-          INSTANCE.getFlair()
-        }).toThrowError('Flair “unknownFlair” is not defined for “SomeComponent” on theme “Awesome”.')
       })
     })
   })
 
   describe('Method “getTheme”', () => {
-    @themeable('SomeComponent')
+    @themeable
     class SomeComponent extends Component {}
 
     describe('No theme in the context', () => {
@@ -251,7 +243,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
   })
 
   describe('Method “getPresentableData”', () => {
-    @themeable('SomeComponent')
+    @themeable
     class SomeComponent extends Component {}
 
     describe('No theme in the context', () => {
@@ -272,7 +264,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           ).instance()
 
           expect(COMP1.getPresentableData().props.className).toBe(expected)
-          expect(COMP2.getPresentableData().props.className).toBe(expected)
+          expect(COMP2.getPresentableData().props.className).toBeUndefined()
         }
       })
 
@@ -297,7 +289,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           expect(COMP1.getPresentableData().props.className)
             .toBe(`foo bar ${expected}`)
           expect(COMP2.getPresentableData().props.className)
-            .toBe(`foo bar ${expected}`)
+            .toBe(`foo bar`)
         }
       })
     })
@@ -309,7 +301,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             <SomeComponent flair={flairPattern}/>,
             OPTIONS
           ).instance()
-          expect(INSTANCE.getPresentableData().props.className).toBe(expected)
+          expect(INSTANCE.getPresentableData().props.className).toBeUndefined()
         }
       })
 
@@ -323,7 +315,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             OPTIONS
           ).instance()
           expect(INSTANCE.getPresentableData().props.className)
-            .toBe(`foo bar ${expected}`)
+            .toBe(`foo bar`)
         }
       })
     })
@@ -338,7 +330,7 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           }
         }
 
-        @themeable('SomeComponent')
+        @themeable
         @defaultPresenter(SomePresenter)
         class SomeComponent extends Component {}
 
@@ -365,25 +357,15 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             ).instance()
 
             expect(COMP1.getPresenter()).toBe(presenter)
-            expect(COMP2.getPresenter()).toBe(presenter)
+            // It’ll use the default presenter because the component has no
+            // identifier to load a presenter from the theme in the context.
+            expect(COMP2.getPresenter()).toBe(SomePresenter)
           }
-        })
-
-        it('Throws when the specified presenter is not found', () => {
-          expect(() => {
-            const INSTANCE = shallow(
-              <SomeComponent
-                flair="!unknownPresenter"
-                theme={NORMAL_THEME}
-              />
-            ).instance()
-            INSTANCE.getPresenter()
-          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
         })
       })
 
       describe('It does not have a default presenter', () => {
-        @themeable('SomeComponent')
+        @themeable
         class SomeComponent extends Component {}
 
         it('returns undefined when no “ComponentTheme” or “Theme” is available', () => {
@@ -409,20 +391,8 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
             ).instance()
 
             expect(COMP1.getPresenter()).toBe(presenter)
-            expect(COMP2.getPresenter()).toBe(presenter)
+            expect(COMP2.getPresenter()).toBeUndefined()
           }
-        })
-
-        it('Throws when the specified presenter is not found', () => {
-          expect(() => {
-            const INSTANCE = shallow(
-              <SomeComponent
-                flair="!unknownPresenter"
-                theme={NORMAL_THEME}
-              />
-            ).instance()
-            INSTANCE.getPresenter()
-          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
         })
       })
     })
@@ -435,53 +405,33 @@ describe('Decorator themeable applied on “SomeComponent”', () => {
           }
         }
 
-        @themeable('SomeComponent')
+        @themeable
         @defaultPresenter(SomePresenter)
         class SomeComponent extends Component {}
 
         it('returns the expected presenter', () => {
-          for (let [ flairPattern, , presenter ] of TEST_DATA) {
+          for (let [ flairPattern ] of TEST_DATA) {
             const INSTANCE = shallow(
               <SomeComponent flair={flairPattern}/>,
               OPTIONS
             ).instance()
-            expect(INSTANCE.getPresenter()).toBe(presenter)
+            expect(INSTANCE.getPresenter()).toBe(SomePresenter)
           }
-        })
-
-        it('Throws when the specified presenter is not found', () => {
-          expect(() => {
-            const INSTANCE = shallow(
-              <SomeComponent flair="!unknownPresenter"/>,
-              OPTIONS
-            ).instance()
-            INSTANCE.getPresenter()
-          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
         })
       })
 
       describe('It does not have a default presenter', () => {
-        @themeable('SomeComponent')
+        @themeable
         class SomeComponent extends Component {}
 
         it('returns the expected presenter', () => {
-          for (let [ flairPattern, , presenter ] of TEST_DATA) {
+          for (let [ flairPattern ] of TEST_DATA) {
             const INSTANCE = shallow(
               <SomeComponent flair={flairPattern}/>,
               OPTIONS
             ).instance()
-            expect(INSTANCE.getPresenter()).toBe(presenter)
+            expect(INSTANCE.getPresenter()).toBeUndefined()
           }
-        })
-
-        it('Throws when the specified presenter is not found', () => {
-          expect(() => {
-            const INSTANCE = shallow(
-              <SomeComponent flair="!unknownPresenter"/>,
-              OPTIONS
-            ).instance()
-            INSTANCE.getPresenter()
-          }).toThrowError('Presenter “unknownPresenter” is not defined for “SomeComponent” on theme “Awesome”.')
         })
       })
     })

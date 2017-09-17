@@ -27,13 +27,7 @@ function isTheme(target) {
   return target && target.componentThemes !== undefined
 }
 
-/**
- * Enables theming support for a ReactJS component.
- *
- * @param identifier
- * A unique identifier used to select the “ComponentTheme” inside the “Theme”.
- */
-export function themeable(identifier:string) {
+function decorateComponent(identifier:string) {
   return (targetComponent:Class<Component>) => {
     // Modify the target component to enable support for presenters if necessary.
     if (!isPresentable(targetComponent))
@@ -93,7 +87,19 @@ export function themeable(identifier:string) {
 
         if (extracted === undefined) {
           const THEME = this.getTheme()
-          throw new Error(`Flair “${TARGET}” is not defined for “${this.getThemeableIdentifier()}” on theme “${THEME.name}”.`)
+          const IDENTIFIER = this.getThemeableIdentifier()
+          const CLASS = prototype.constructor.name
+
+          // Component without an identifier.
+          if (!IDENTIFIER)
+            throw new Error(`Flair “${TARGET}” is not defined for the component without identifier “${CLASS}”.`)
+
+          // Has an identifier but using a component theme.
+          if (!THEME)
+            throw new Error(`Flair “${TARGET}” is not defined for “${IDENTIFIER}” on the component theme.`)
+
+          // Has an identifier and it is using a theme.
+          throw new Error(`Flair “${TARGET}” is not defined for “${IDENTIFIER}” on theme “${THEME.name}”.`)
         }
 
         if (Array.isArray(extracted))
@@ -122,6 +128,13 @@ export function themeable(identifier:string) {
 
       let result = COMPONENT_THEME.presenters[presenter]
       if (result === undefined) {
+        const THEME = this.getTheme()
+
+        // Using a component theme.
+        if (!THEME)
+          throw new Error(`Presenter “${presenter}” is not defined for “${this.getThemeableIdentifier()}” on component theme.`)
+
+        // Using a theme.
         const { name: THEME_NAME = '' } = this.getTheme()
         throw new Error(`Presenter “${presenter}” is not defined for “${this.getThemeableIdentifier()}” on theme “${THEME_NAME}”.`)
       }
@@ -173,6 +186,22 @@ export function themeable(identifier:string) {
 
     return targetComponent
   }
+}
+
+/**
+ * Enables theming support for a ReactJS component.
+ *
+ * @param identifierOrComponent
+ * A unique identifier used to select the “ComponentTheme” inside the “Theme” or
+ * the component to enable theming. If the component has no identifier, it’ll
+ * only support themes passed directly to it.
+ */
+export function themeable(identifierOrComponent:string|Class<Component>) {
+  // It’s an identifier.
+  if (typeof identifierOrComponent === 'string')
+    return decorateComponent(identifierOrComponent)
+  // It’s a component.
+  return decorateComponent()(identifierOrComponent)
 }
 
 export default themeable

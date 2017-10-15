@@ -42,7 +42,7 @@ function decorateComponent(identifier:string) {
     }
 
     if (isThemeable(targetComponent))
-      return
+      return targetComponent
 
     // The theme attribute in the context will be defined by the “ContextTheme”
     // component.

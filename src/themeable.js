@@ -85,26 +85,25 @@ function decorateComponent(identifier:string) {
       for (const TARGET of flairs.split(/\s+/)) {
         let extracted = COMPONENT_THEME.flairs[TARGET]
 
-        if (extracted === undefined) {
-          const THEME = this.getTheme()
-          const IDENTIFIER = this.getThemeableIdentifier()
-          const CLASS = prototype.constructor.name
-
-          // Component without an identifier.
-          if (!IDENTIFIER)
-            throw new Error(`Flair “${TARGET}” is not defined for the component without identifier “${CLASS}”.`)
-
-          // Has an identifier but using a component theme.
-          if (!THEME)
-            throw new Error(`Flair “${TARGET}” is not defined for “${IDENTIFIER}” on the component theme.`)
-
-          // Has an identifier and it is using a theme.
-          throw new Error(`Flair “${TARGET}” is not defined for “${IDENTIFIER}” on theme “${THEME.name}”.`)
+        if (extracted !== undefined) {
+          result += ` ${Array.isArray(extracted) ? extracted.join(' ') : extracted}`
+          continue
         }
 
-        if (Array.isArray(extracted))
-          extracted = extracted.join(' ')
-        result += ` ${extracted}`
+        const THEME = this.getTheme()
+        const IDENTIFIER = this.getThemeableIdentifier()
+        const CLASS = prototype.constructor.name
+
+        // Component without an identifier.
+        if (!IDENTIFIER)
+          throw new Error(`Flair “${TARGET}” is not defined for the component without identifier “${CLASS}”.`)
+
+        // Has an identifier but using a component theme.
+        if (!THEME)
+          throw new Error(`Flair “${TARGET}” is not defined for “${IDENTIFIER}” on the component theme.`)
+
+        // Has an identifier and it is using a theme.
+        throw new Error(`Flair “${TARGET}” is not defined for “${IDENTIFIER}” on theme “${THEME.name}”.`)
       }
 
       // Remove unnecessary spaces.
@@ -127,18 +126,19 @@ function decorateComponent(identifier:string) {
       }
 
       let result = COMPONENT_THEME.presenters[presenter]
-      if (result === undefined) {
-        const THEME = this.getTheme()
+      if (result !== undefined)
+        return result
 
-        // Using a component theme.
-        if (!THEME)
-          throw new Error(`Presenter “${presenter}” is not defined for “${this.getThemeableIdentifier()}” on component theme.`)
+      const THEME = this.getTheme()
+      const IDENTIFIER = this.getThemeableIdentifier()
 
-        // Using a theme.
-        const { name: THEME_NAME = '' } = this.getTheme()
-        throw new Error(`Presenter “${presenter}” is not defined for “${this.getThemeableIdentifier()}” on theme “${THEME_NAME}”.`)
-      }
-      return result
+      // Using a component theme.
+      if (!THEME)
+        throw new Error(`Presenter “${presenter}” is not defined for “${IDENTIFIER}” on component theme.`)
+
+      // Using a theme.
+      const { name: THEME_NAME = '' } = this.getTheme()
+      throw new Error(`Presenter “${presenter}” is not defined for “${IDENTIFIER}” on theme “${THEME_NAME}”.`)
     }
 
     prototype.getTheme = function() {

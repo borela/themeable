@@ -1,7 +1,7 @@
 {
   "name": "themeable",
-  "version": "2.4.1",
-  "description": "Decorator to enable theming on ReactJS components.",
+  "version": "2.4.2",
+  "description": "Decorator to enable theming on ReactJS smart components.",
   "license": "Apache-2.0",
   "main": "build",
   "scripts": {
@@ -23,6 +23,7 @@
     "ctrine",
     "decorator",
     "react",
+    "smart",
     "theme",
     "themeable",
     "theming",

@@ -14,42 +14,6 @@ import BarPresenter from './BarPresenter'
 import FooPresenter from './FooPresenter'
 import pad from 'pad'
 
-function combinedData(flairs, presenters) {
-  let result = []
-  for (let [ flairPattern, flair ] of flairs) {
-    for (let [ presenterPattern, presenter ] of presenters)
-      result.push([ `${flairPattern}!${presenterPattern}`, flair, presenter ])
-  }
-  return result
-}
-
-function joinFlairs(data) {
-  let result = []
-  for (let [ targetStringArray, ...rest ] of data) {
-    if (targetStringArray.length < 2) {
-      result.push([ targetStringArray, ...rest ])
-      continue
-    }
-
-    for (let i = 1; i < 3; i++) {
-      const SEPARATOR = pad('', i)
-      result.push([ targetStringArray.join(SEPARATOR), ...rest ])
-    }
-  }
-  return result
-}
-
-function padData(data) {
-  let result = []
-  for (let [ targetString, ...rest ] of data) {
-    for (let i = 1; i < 3; i++) {
-      result.push([ pad(targetString, i), ...rest ])
-      result.push([ pad(i, targetString), ...rest ])
-    }
-  }
-  return result
-}
-
 const NORMALIZED_BLUE_FLAIR = 'blueA blueB blueC'
 const NORMALIZED_RED_FLAIR = 'redA redB redC'
 const NORMALIZED_GREEN_FLAIR = 'greenA greenB greenC'
@@ -73,6 +37,48 @@ const PRESENTERS = [
   [ 'bar', BarPresenter ],
   [ 'foo', FooPresenter ]
 ]
+
+// Generate a dataset combining the flairs and presenters patterns.
+function combinedData(flairs, presenters) {
+  let result = []
+  for (let [ flairPattern, flair ] of flairs) {
+    for (let [ presenterPattern, presenter ] of presenters)
+      result.push([ `${flairPattern}!${presenterPattern}`, flair, presenter ])
+  }
+  return result
+}
+
+// Used to join the raw flairs and generate the full data set.
+function joinFlairs(data) {
+  let result = []
+  for (let [ targetStringArray, ...rest ] of data) {
+    // Raw flair containing only one flair don’t need to be modified.
+    if (targetStringArray.length < 2) {
+      result.push([ targetStringArray, ...rest ])
+      continue
+    }
+    // Concatenate the flairs using one, two and three spaces.
+    for (let i = 1; i < 3; i++) {
+      const SPACES = pad('', i)
+      result.push([ targetStringArray.join(SPACES), ...rest ])
+    }
+  }
+  return result
+}
+
+// Used to add spaces around the data.
+function padData(data) {
+  let result = []
+  for (let [ targetString, ...rest ] of data) {
+    for (let i = 1; i < 3; i++) {
+      // Add spaces to the right.
+      result.push([ pad(targetString, i), ...rest ])
+      // Add spaces to the left.
+      result.push([ pad(i, targetString), ...rest ])
+    }
+  }
+  return result
+}
 
 const FLAIRS = joinFlairs(RAW_FLAIRS)
 const PADDED_FLAIRS = padData(FLAIRS)

@@ -1,7 +1,7 @@
 {
   "name": "themeable",
-  "version": "2.4.1",
-  "description": "Decorator to enable theming on ReactJS components.",
+  "version": "2.4.4",
+  "description": "Decorator to enable theming on ReactJS smart components.",
   "license": "Apache-2.0",
   "main": "build",
   "scripts": {
@@ -23,6 +23,7 @@
     "ctrine",
     "decorator",
     "react",
+    "smart",
     "theme",
     "themeable",
     "theming",
@@ -35,17 +36,17 @@
     "url": "http://www.borela.tech"
   },
   "dependencies": {
-    "presentable": "^3.3.0",
-    "prop-types": "^15.5.10"
+    "presentable": "^3.4.1",
+    "prop-types": "^15.6.0"
   },
   "devDependencies": {
     "@ctrine/babel-preset-lib": "^3.0.0",
-    "@ctrine/toolbox": "^6.0.0",
-    "pad": "^1.1.0",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "@ctrine/toolbox": "^6.0.2",
+    "pad": "^1.2.1",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2"
   },
   "peerDependencies": {
-    "react": "^15.6.1"
+    "react": "^15.6.1 || ^16.0.0"
   }
 }

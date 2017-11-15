@@ -46,6 +46,10 @@ function _resolveTheme(source, data, identifier) {
   }
 }
 
+/**
+ * Tries to resolve the component theme first from the properties and then from
+ * the context if the former failed.
+ */
 export function resolveTheme(targetComponent) {
   if (!isThemeable(targetComponent))
     return undefined

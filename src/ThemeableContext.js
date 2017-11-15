@@ -13,8 +13,8 @@
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 
-export class ContextTheme extends Component {
-  childContextTypes = {
+export class ThemeableContext extends Component {
+  static childContextTypes = {
     theme: PropTypes.object
   }
 
@@ -23,4 +23,4 @@ export class ContextTheme extends Component {
   }
 }
 
-export default ContextTheme
+export default ThemeableContext

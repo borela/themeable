@@ -36,6 +36,11 @@ export const NORMAL = {
   }
 }
 
+export const CONTEXT = {
+  ...NORMAL,
+  a: 1, b: 2, c: 3
+}
+
 export const WITHOUT_DEFAULT_FLAIR = {
   flairs: { ...FLAIRS },
   presenters: {

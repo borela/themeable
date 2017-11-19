@@ -60,7 +60,7 @@ function joinFlairs(data) {
       continue
     }
     // Concatenate the flairs using one, two and three spaces.
-    for (let i = 1; i < 3; i++) {
+    for (let i = 1; i <= 3; i++) {
       const SPACES = pad('', i)
       result.push([ targetStringArray.join(SPACES), ...rest ])
     }
@@ -72,11 +72,22 @@ function joinFlairs(data) {
 function padData(data) {
   let result = []
   for (let [ targetString, ...rest ] of data) {
-    for (let i = 1; i < 3; i++) {
+    // We are testing for up to 3 spaces and for empty strings we’ll use this
+    // condition to prevent duplicates.
+    if (targetString === '') {
+      result.push([ ' ', ...rest ])
+      result.push([ '  ', ...rest ])
+      result.push([ '   ', ...rest ])
+      continue
+    }
+
+    // Other strings, add up to 3 spaces to the left and right.
+    for (let i = 1; i <= 3; i++) {
+      const LENGHT = targetString.length
       // Add spaces to the right.
-      result.push([ pad(targetString, i), ...rest ])
+      result.push([ pad(targetString, LENGHT + i), ...rest ])
       // Add spaces to the left.
-      result.push([ pad(i, targetString), ...rest ])
+      result.push([ pad(LENGHT + i, targetString), ...rest ])
     }
   }
   return result

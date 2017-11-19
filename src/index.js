@@ -11,9 +11,12 @@
 // the License.
 // @flow
 
-export { ComponentTheme } from './ComponentTheme'
-export { isThemeable } from './isThemeable'
-export { Theme } from './Theme'
-export { themeable } from './themeable'
-export { ThemeableContext } from './ThemeableContext'
+export * from './ComponentTheme'
+export * from './isTheme'
+export * from './isThemeable'
+export * from './resolveFlair'
+export * from './resolveTheme'
+export * from './Theme'
+export * from './themeable'
+export * from './ThemeableContext'
 export default from './themeable'

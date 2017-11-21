@@ -11,18 +11,12 @@
 // the License.
 
 import isTheme from './isTheme'
-import isThemeable from './isThemeable'
-
-const NO_THEME_RESOLVED = {
-  componentTheme: undefined,
-  identifier: undefined,
-  source: undefined,
-  theme: undefined
-}
 
 function _resolveTheme(source, data, identifier) {
-  let { theme } = data
+  if (!data)
+    return undefined
 
+  let { theme } = data
   if (!theme)
     return undefined
 
@@ -45,16 +39,28 @@ function _resolveTheme(source, data, identifier) {
   }
 }
 
+type ExpectedData = {
+  context?:Object,
+  identifier?:string,
+  props?:Object
+}
+
+const NO_THEME_RESOLVED = {
+  componentTheme: undefined,
+  identifier: undefined,
+  source: undefined,
+  theme: undefined
+}
+
 /**
- * Tries to resolve the component theme first from the properties and then from
- * the context if the former failed.
+ * Tries to resolve the component theme from the properties and context.
  */
-export function resolveTheme(targetComponent) {
-  if (!isThemeable(targetComponent))
-    return undefined
-  const IDENTIFIER = targetComponent.getThemeableIdentifier()
-  return _resolveTheme('property', targetComponent.props, IDENTIFIER)
-    || _resolveTheme('context', targetComponent.context, IDENTIFIER)
+export function resolveTheme(data:ExpectedData) {
+  if (!data)
+    return NO_THEME_RESOLVED
+  let { context, identifier, props } = data
+  return _resolveTheme('property', props, identifier)
+    || _resolveTheme('context', context, identifier)
     || NO_THEME_RESOLVED
 }
 

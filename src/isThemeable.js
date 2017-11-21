@@ -24,7 +24,7 @@ export function isThemeable(targetComponent) {
   const PROTOTYPE = targetComponent instanceof Component
     ? Object.getPrototypeOf(targetComponent)
     : targetComponent.prototype
-  return PROTOTYPE[SYMBOL] === true
+  return PROTOTYPE && PROTOTYPE[SYMBOL] === true || false
 }
 
 export default isThemeable

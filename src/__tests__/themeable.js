@@ -12,8 +12,8 @@
 
 import Adapter from 'enzyme-adapter-react-16'
 import React, { Component } from 'react'
-import { isPresentable, presentable } from 'presentable'
 import { configure, shallow } from 'enzyme'
+import { isPresentable, presentable } from 'presentable'
 import { themeable } from '../..'
 
 configure({ adapter: new Adapter() })

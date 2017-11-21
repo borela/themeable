@@ -25,11 +25,9 @@ const RESOLVED_THEME = {
 
 describe('Function “resolveFlair”', () => {
   each(TEST_DATA)
-    .describe('using the pattern “%s”', (pattern, expectedFlair, expectedPresenter) => {
-      it('returns the expected flair and presenter', () => {
-        const RESOLVED_FLAIR = resolveFlair(RESOLVED_THEME, pattern)
-        expect(RESOLVED_FLAIR.flair).toBe(expectedFlair)
-        expect(RESOLVED_FLAIR.presenter).toBe(expectedPresenter)
-      })
+    .test('using the pattern “%s”', (pattern, expectedFlair, expectedPresenter) => {
+      const RESOLVED_FLAIR = resolveFlair(RESOLVED_THEME, pattern)
+      expect(RESOLVED_FLAIR.flair).toBe(expectedFlair)
+      expect(RESOLVED_FLAIR.presenter).toBe(expectedPresenter)
     })
 })

@@ -9,7 +9,6 @@
 // WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 // License for the specific language governing permissions and limitations under
 // the License.
-// @flow
 
 /**
  * Checks if an object has the format of a “Theme’, not a “ComponentTheme”.

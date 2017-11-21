@@ -9,7 +9,6 @@
 // WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 // License for the specific language governing permissions and limitations under
 // the License.
-// @flow
 
 import isThemeable from './isThemeable'
 import PropTypes from 'prop-types'
@@ -27,8 +26,8 @@ function isTheme(target) {
   return target && target.componentThemes !== undefined
 }
 
-function decorateComponent(identifier:string) {
-  return (targetComponent:Class<Component>) => {
+function decorateComponent(identifier) {
+  return targetComponent => {
     // Modify the target component to enable support for presenters if necessary.
     if (!isPresentable(targetComponent))
       presentable(targetComponent)

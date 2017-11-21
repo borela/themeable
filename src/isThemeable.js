@@ -9,7 +9,6 @@
 // WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 // License for the specific language governing permissions and limitations under
 // the License.
-// @flow
 
 import { Component } from 'react'
 
@@ -19,7 +18,7 @@ const SYMBOL = Symbol.for('themeable')
 /**
  * Check if the target component supports theming.
  */
-export function isThemeable(targetComponent:Class<Component>|Component) {
+export function isThemeable(targetComponent) {
   if (!targetComponent)
     return false
   const PROTOTYPE = targetComponent instanceof Component

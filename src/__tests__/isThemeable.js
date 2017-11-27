@@ -10,8 +10,9 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import isThemeable from '../isThemeable'
+import themeable from '../themeable'
 import { Component } from 'react'
-import { isThemeable, themeable } from '..'
 
 describe('Function “isThemeable”', () => {
   class NonThemeable extends Component {}
@@ -22,25 +23,16 @@ describe('Function “isThemeable”', () => {
   @themeable('custom-string')
   class ThemeableComponentB extends Component {}
 
-  it('returns “true” for a themeable class', () => {
+  it('returns “true” for a themeable class or instance', () => {
     expect(isThemeable(ThemeableComponentA)).toBe(true)
     expect(isThemeable(ThemeableComponentB)).toBe(true)
-  })
-
-  it('returns “true” for a themeable instance', () => {
     expect(isThemeable(new ThemeableComponentA)).toBe(true)
     expect(isThemeable(new ThemeableComponentB)).toBe(true)
   })
 
-  it('returns “false” for a non themeable class', () => {
-    expect(isThemeable(NonThemeable)).toBe(false)
-  })
-
-  it('returns “false” for a non themeable instance', () => {
-    expect(isThemeable(new NonThemeable)).toBe(false)
-  })
-
   it('returns “false” for any other value', () => {
+    expect(isThemeable(NonThemeable)).toBe(false)
+    expect(isThemeable(new NonThemeable)).toBe(false)
     expect(isThemeable(undefined)).toBe(false)
     expect(isThemeable(null)).toBe(false)
     expect(isThemeable(0)).toBe(false)

@@ -10,51 +10,47 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import Adapter from 'enzyme-adapter-react-16'
-import React, { Component } from 'react'
-import { configure, shallow } from 'enzyme'
+import themeable from '../../themeable'
+import { Component } from 'react'
 import { isPresentable, presentable } from 'presentable'
-import { themeable } from '../..'
-
-configure({ adapter: new Adapter() })
 
 describe('Decorator “themeable” applied on a', () => {
   describe('presentable component', () => {
-    @themeable
     @presentable
     class SomeComponentA extends Component {}
 
-    @themeable('custom-string')
     @presentable
     class SomeComponentB extends Component {}
 
-    let instanceA, instanceB
-
-    beforeEach(() => {
-      instanceA = shallow(<SomeComponentA/>).instance()
-      instanceB = shallow(<SomeComponentB/>).instance()
-    })
+    let DecoratedSomeComponentA = themeable(SomeComponentA)
+    let DecoratedSomeComponentB = themeable('custom-string')(SomeComponentB)
 
     it('has the same constructor', () => {
-      expect(instanceA instanceof SomeComponentA).toBe(true)
-      expect(instanceB instanceof SomeComponentB).toBe(true)
-      expect(Object.getPrototypeOf(instanceA).constructor).toBe(SomeComponentA)
-      expect(Object.getPrototypeOf(instanceB).constructor).toBe(SomeComponentB)
+      const INSTANCE_A = new DecoratedSomeComponentA
+      const INSTANCE_B = new DecoratedSomeComponentB
+      expect(INSTANCE_A instanceof SomeComponentA).toBe(true)
+      expect(INSTANCE_B instanceof SomeComponentB).toBe(true)
+      expect(Object.getPrototypeOf(INSTANCE_A).constructor).toBe(SomeComponentA)
+      expect(Object.getPrototypeOf(INSTANCE_B).constructor).toBe(SomeComponentB)
+    })
+
+    it('allows the decorator to be applied multiple times', () => {
+      expect(() => themeable(SomeComponentA)).not.toThrow()
+      expect(() => themeable(SomeComponentB)).not.toThrow()
     })
   })
 
   describe('non presentable component', () => {
-    @themeable
     class SomeComponentA extends Component {}
-
-    @themeable('custom-string')
     class SomeComponentB extends Component {}
 
+    let DecoratedSomeComponentA = themeable(SomeComponentA)
+    let DecoratedSomeComponentB = themeable('custom-string')(SomeComponentB)
     let instanceA, instanceB
 
     beforeEach(() => {
-      instanceA = shallow(<SomeComponentA/>).instance()
-      instanceB = shallow(<SomeComponentB/>).instance()
+      instanceA = new DecoratedSomeComponentA
+      instanceB = new DecoratedSomeComponentB
     })
 
     it('has the same constructor', () => {
@@ -62,6 +58,11 @@ describe('Decorator “themeable” applied on a', () => {
       expect(instanceB instanceof SomeComponentB).toBe(true)
       expect(Object.getPrototypeOf(instanceA).constructor).toBe(SomeComponentA)
       expect(Object.getPrototypeOf(instanceB).constructor).toBe(SomeComponentB)
+    })
+
+    it('allows the decorator to be applied multiple times', () => {
+      expect(() => themeable(SomeComponentA)).not.toThrow()
+      expect(() => themeable(SomeComponentB)).not.toThrow()
     })
 
     it('becomes presentable too', () => {

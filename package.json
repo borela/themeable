@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npm run clean && babel src -d build --ignore **/__*__/** -s",
     "clean": "rimraf \"build/!(.git)\"",
-    "dev": "jest src --verbose --watchAll",
+    "dev": "jest src --verbose --watch",
     "start": "npm run dev",
     "test": "jest src --verbose"
   },
@@ -36,7 +36,7 @@
     "url": "http://www.borela.tech"
   },
   "dependencies": {
-    "presentable": "^3.4.5",
+    "presentable": "^4.0.0",
     "prop-types": "^15.6.0"
   },
   "devDependencies": {

@@ -9,6 +9,14 @@
 // WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 // License for the specific language governing permissions and limitations under
 // the License.
+// @flow
+
+import { Component } from 'react'
+
+export type ResolvedFlair = {|
+  flair?:string,
+  presenter?:Component<*>
+|}
 
 const NO_FLAIR_RESOLVED = {
   flair: undefined,
@@ -17,7 +25,7 @@ const NO_FLAIR_RESOLVED = {
 
 const EXTRACTOR = /\s*(\w+(?:\s+\w+)*)?(?:\s*!\s*(\w+))?\s*/
 
-export function resolveFlair(resolvedTheme, pattern) {
+export function resolveFlair(resolvedTheme, pattern):ResolvedFlair {
   if (!resolvedTheme.componentTheme)
     return NO_FLAIR_RESOLVED
 

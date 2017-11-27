@@ -10,8 +10,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import resolveTheme from '../resolveTheme'
 import { CONTEXT_WITH_COMPONENT_THEME, CONTEXT_WITH_THEME } from 'data'
-import { resolveTheme } from '..'
 
 import {
   CONTEXT as CONTEXT_COMPONENT_THEME,

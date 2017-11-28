@@ -10,7 +10,6 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import each from 'jest-each'
 import resolveFlair from '../resolveFlair'
 import { NORMAL as NORMAL_COMPONENT_THEME } from 'AwesomeComponentTheme'
 import { NORMAL as NORMAL_THEME } from 'AwesomeTheme'
@@ -24,10 +23,11 @@ const RESOLVED_THEME = {
 }
 
 describe.skip('Function “resolveFlair”', () => {
-  each(TEST_DATA)
-    .test('using the pattern “%s”', (pattern, expectedFlair, expectedPresenter) => {
-      const RESOLVED_FLAIR = resolveFlair(RESOLVED_THEME, pattern)
-      expect(RESOLVED_FLAIR.flair).toBe(expectedFlair)
-      expect(RESOLVED_FLAIR.presenter).toBe(expectedPresenter)
+  for (const [ PATTERN, EXPECTED_FLAIR, EXPECTED_PRESENTER ] of TEST_DATA) {
+    test(`using the pattern “${PATTERN}”`, () => {
+      const RESOLVED_FLAIR = resolveFlair(RESOLVED_THEME, PATTERN)
+      expect(RESOLVED_FLAIR.flair).toBe(EXPECTED_FLAIR)
+      expect(RESOLVED_FLAIR.presenter).toBe(EXPECTED_PRESENTER)
     })
+  }
 })

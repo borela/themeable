@@ -10,7 +10,6 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import each from 'jest-each'
 import resolveThemeableData from '../resolveThemeableData'
 import themeable from '../themeable'
 import { Component } from 'react'
@@ -28,12 +27,7 @@ describe('Function “resolveThemeableData”', () => {
 
   it('returns the expected data without themeable meta properties', () => {
     const COMP_A = new SomeComponent(
-      {
-        flair: null,
-        presenter: null,
-        theme: null,
-        ...PROPS
-      },
+      { flair: null, presenter: null, theme: null, ...PROPS },
       CONTEXT
     )
 
@@ -44,13 +38,7 @@ describe('Function “resolveThemeableData”', () => {
     })
 
     const COMP_B = new SomeComponent(
-      {
-        className: 'foo bar baz',
-        flair: null,
-        presenter: null,
-        theme: null,
-        ...PROPS
-      },
+      { className: 'foo bar baz', flair: null, presenter: null, theme: null, ...PROPS },
       CONTEXT
     )
 
@@ -62,6 +50,7 @@ describe('Function “resolveThemeableData”', () => {
   })
 
   class SomeClass {}
+
   const BOGUS_THEMEABLES = [
     [ undefined ],
     [ null ],
@@ -69,13 +58,14 @@ describe('Function “resolveThemeableData”', () => {
     [ '123' ],
     [ 0 ],
     [ 42 ],
-    [ () => SomeClass ]
+    [ SomeClass ]
   ]
 
-  each(BOGUS_THEMEABLES)
-    .it('returns undefined for “%s” passed as target', themeable => {
+  for (let themeable of BOGUS_THEMEABLES) {
+    it(`returns undefined for “${themeable}” passed as target`, () => {
       expect(resolveThemeableData(themeable)).toBeUndefined()
     })
+  }
 
   const BOGUS_RESOLVED_FLAIR = [
     [ undefined ],
@@ -85,19 +75,14 @@ describe('Function “resolveThemeableData”', () => {
     [ '123' ],
     [ 0 ],
     [ 42 ],
-    [ () => SomeComponent ],
-    [ () => SomeClass ]
+    [ SomeComponent ],
+    [ SomeClass ]
   ]
 
-  each(BOGUS_RESOLVED_FLAIR)
-    .it('returns basic data for flair “%s”', resolvedFlair => {
+  for (let resolvedFlair of BOGUS_RESOLVED_FLAIR) {
+    it(`returns basic data for flair “${resolvedFlair}”`, () => {
       const COMP_A = new SomeComponent(
-        {
-          flair: null,
-          presenter: null,
-          theme: null,
-          ...PROPS
-        },
+        { flair: null, presenter: null, theme: null, ...PROPS },
         CONTEXT
       )
 
@@ -108,13 +93,7 @@ describe('Function “resolveThemeableData”', () => {
       })
 
       const COMP_B = new SomeComponent(
-        {
-          className: 'foo bar baz',
-          flair: null,
-          presenter: null,
-          theme: null,
-          ...PROPS
-        },
+        { className: 'foo bar baz', flair: null, presenter: null, theme: null, ...PROPS },
         CONTEXT
       )
 
@@ -124,4 +103,5 @@ describe('Function “resolveThemeableData”', () => {
         state: STATE
       })
     })
+  }
 })

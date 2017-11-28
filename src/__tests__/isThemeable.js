@@ -23,19 +23,33 @@ describe('Function “isThemeable”', () => {
   @themeable('custom-string')
   class ThemeableComponentB extends Component {}
 
-  it('returns “true” for a themeable class or instance', () => {
-    expect(isThemeable(ThemeableComponentA)).toBe(true)
-    expect(isThemeable(ThemeableComponentB)).toBe(true)
-    expect(isThemeable(new ThemeableComponentA)).toBe(true)
-    expect(isThemeable(new ThemeableComponentB)).toBe(true)
-  })
+  const THEMEABLES = [
+    ThemeableComponentA,
+    ThemeableComponentB,
+    new ThemeableComponentA,
+    new ThemeableComponentB
+  ]
 
-  it('returns “false” for any other value', () => {
-    expect(isThemeable(NonThemeable)).toBe(false)
-    expect(isThemeable(new NonThemeable)).toBe(false)
-    expect(isThemeable(undefined)).toBe(false)
-    expect(isThemeable(null)).toBe(false)
-    expect(isThemeable(0)).toBe(false)
-    expect(isThemeable('')).toBe(false)
-  })
+  const NON_THEMEABLES = [
+    NonThemeable,
+    new NonThemeable,
+    undefined,
+    null,
+    0,
+    42,
+    '',
+    '...'
+  ]
+
+  for (const THEMEABLE of THEMEABLES) {
+    it(`returns “true” for “${THEMEABLE}”`, () => {
+      expect(isThemeable(THEMEABLE)).toBe(true)
+    })
+  }
+
+  for (const NON_THEMEABLE of NON_THEMEABLES) {
+    it(`returns “false” for “${NON_THEMEABLE}”`, () => {
+      expect(isThemeable(NON_THEMEABLE)).toBe(false)
+    })
+  }
 })

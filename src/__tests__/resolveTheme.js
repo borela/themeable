@@ -24,18 +24,20 @@ import {
 } from 'AwesomeTheme'
 
 describe('Function “resolveTheme”', () => {
-  it('returns “undefined” when an non themeable is passed', () => {
-    const NO_THEME_RESOLVED = {
-      componentTheme: undefined,
-      identifier: undefined,
-      source: undefined,
-      theme: undefined
-    }
-    expect(resolveTheme(undefined)).toEqual(NO_THEME_RESOLVED)
-    expect(resolveTheme(null)).toEqual(NO_THEME_RESOLVED)
-    expect(resolveTheme(0)).toEqual(NO_THEME_RESOLVED)
-    expect(resolveTheme('')).toEqual(NO_THEME_RESOLVED)
-  })
+  const NON_THEMEABLES = [
+    undefined,
+    null,
+    0,
+    123,
+    '',
+    '...'
+  ]
+
+  for (const NON_THEMEABLE of NON_THEMEABLES) {
+    it(`returns “undefined” for “${NON_THEMEABLE}”`, () => {
+      expect(resolveTheme(NON_THEMEABLE)).toBeUndefined()
+    })
+  }
 
   describe('when there’s', () => {
     describe('a “ComponentTheme” in the context', () => {
@@ -136,15 +138,8 @@ describe('Function “resolveTheme”', () => {
           props: { theme: NORMAL_THEME }
         }
 
-        const RESOLVED = {
-          componentTheme: undefined,
-          identifier: undefined,
-          source: undefined,
-          theme: undefined
-        }
-
-        expect(resolveTheme(COMP_A1)).toEqual(RESOLVED)
-        expect(resolveTheme(COMP_A2)).toEqual(RESOLVED)
+        expect(resolveTheme(COMP_A1)).toBeUndefined()
+        expect(resolveTheme(COMP_A2)).toBeUndefined()
       })
 
       it('returns the used “ComponentTheme” from the “Theme” loaded from the context', () => {
@@ -219,14 +214,8 @@ describe('Function “resolveTheme”', () => {
           props: { theme: NORMAL_THEME }
         }
 
-        const RESOLVED = {
-          componentTheme: undefined,
-          identifier: undefined,
-          source: undefined,
-          theme: undefined
-        }
-        expect(resolveTheme(COMP_A1)).toEqual(RESOLVED)
-        expect(resolveTheme(COMP_A2)).toEqual(RESOLVED)
+        expect(resolveTheme(COMP_A1)).toBeUndefined()
+        expect(resolveTheme(COMP_A2)).toBeUndefined()
       })
 
       it('returns the “ComponentTheme” specified', () => {

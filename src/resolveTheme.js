@@ -45,23 +45,16 @@ type ExpectedData = {
   props?:Object
 }
 
-const NO_THEME_RESOLVED = {
-  componentTheme: undefined,
-  identifier: undefined,
-  source: undefined,
-  theme: undefined
-}
-
 /**
  * Tries to resolve the component theme from the properties and context.
  */
 export function resolveTheme(data:ExpectedData) {
   if (!data)
-    return NO_THEME_RESOLVED
+    return undefined
   let { context, identifier, props } = data
   return _resolveTheme('property', props, identifier)
     || _resolveTheme('context', context, identifier)
-    || NO_THEME_RESOLVED
+    || undefined
 }
 
 export default resolveTheme

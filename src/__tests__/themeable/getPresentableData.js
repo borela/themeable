@@ -13,18 +13,30 @@
 import themeable from '../../themeable'
 import { Component } from 'react'
 
-describe.skip('method ”getPresentableData', () => {
-  it('uses the same implementation as “getThemeableData”', () => {
+describe('method ”getPresentableData', () => {
+  it('returns the value from “getThemeableData”', () => {
     @themeable
-    class SomeComponentA extends Component {}
+    class SomeComponentA extends Component {
+      getThemeableData() {
+        return 123
+      }
+    }
 
     @themeable('custom-string')
-    class SomeComponentB extends Component {}
+    class SomeComponentB extends Component {
+      getThemeableData() {
+        return 456
+      }
+    }
 
     const COMP_A = new SomeComponentA
     const COMP_B = new SomeComponentB
+    const SPY_A = jest.spyOn(COMP_A, 'getThemeableData')
+    const SPY_B = jest.spyOn(COMP_B, 'getThemeableData')
 
-    expect(COMP_A.getPresentableData).toBe(COMP_A.getThemeableData)
-    expect(COMP_B.getPresentableData).toBe(COMP_B.getThemeableData)
+    expect(COMP_A.getPresentableData()).toBe(123)
+    expect(COMP_B.getPresentableData()).toBe(456)
+    expect(SPY_A).toHaveBeenCalled()
+    expect(SPY_B).toHaveBeenCalled()
   })
 })

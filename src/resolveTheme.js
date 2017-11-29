@@ -11,6 +11,7 @@
 // the License.
 
 import isTheme from './isTheme'
+import isThemeable from './isThemeable'
 
 function _resolveTheme(source:string, data:Object, identifier:string) {
   if (!data)
@@ -39,12 +40,6 @@ function _resolveTheme(source:string, data:Object, identifier:string) {
   }
 }
 
-type ExpectedData = {
-  context?:Object,
-  identifier?:string,
-  props?:Object
-}
-
 export type ResolvedTheme = {
   componentTheme:ComponentTheme,
   identifier?:string,
@@ -55,12 +50,14 @@ export type ResolvedTheme = {
 /**
  * Tries to resolve the component theme from the properties and context.
  */
-export function resolveTheme(data:ExpectedData):ResolvedTheme {
-  if (!data)
+export function resolveTheme(target:Component<*>):ResolvedTheme {
+  debugger;
+  if (!isThemeable(target))
     return undefined
-  let { context, identifier, props } = data
-  return _resolveTheme('property', props, identifier)
-    || _resolveTheme('context', context, identifier)
+  let { context, props } = target
+  const IDENTIFIER = target.getThemeableIdentifier()
+  return _resolveTheme('property', props, IDENTIFIER)
+    || _resolveTheme('context', context, IDENTIFIER)
     || undefined
 }
 

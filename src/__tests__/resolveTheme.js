@@ -11,7 +11,8 @@
 // the License.
 
 import resolveTheme from '../resolveTheme'
-import { CONTEXT_WITH_COMPONENT_THEME, CONTEXT_WITH_THEME } from 'data'
+import themeable from '../themeable'
+import { Component } from 'react'
 
 import {
   CONTEXT as CONTEXT_COMPONENT_THEME,
@@ -39,20 +40,24 @@ describe('Function “resolveTheme”', () => {
     })
   }
 
+  @themeable
+  class SomeComponentA extends Component {}
+
+  @themeable('custom-string')
+  class SomeComponentB extends Component {}
+
   describe('when there’s', () => {
     describe('a “ComponentTheme” in the context', () => {
       it('returns the “ComponentTheme” from the context if the component has no identifier', () => {
-        const COMP_A1 = {
-          ...CONTEXT_WITH_COMPONENT_THEME,
-          identifier: undefined,
-          props: undefined
-        }
+        const COMP_A1 = new SomeComponentA(
+          {},
+          { theme: CONTEXT_COMPONENT_THEME }
+        )
 
-        const COMP_A2 = {
-          ...CONTEXT_WITH_COMPONENT_THEME,
-          identifier: undefined,
-          props: { theme: NORMAL_THEME }
-        }
+        const COMP_A2 = new SomeComponentA(
+          { theme: NORMAL_THEME },
+          { theme: CONTEXT_COMPONENT_THEME }
+        )
 
         const RESOLVED = {
           componentTheme: CONTEXT_COMPONENT_THEME,
@@ -66,11 +71,10 @@ describe('Function “resolveTheme”', () => {
       })
 
       it('returns the “ComponentTheme” from the context if no theme is specified', () => {
-        const COMP = {
-          ...CONTEXT_WITH_COMPONENT_THEME,
-          identifier: 'custom-string',
-          props: undefined
-        }
+        const COMP = new SomeComponentB(
+          {},
+          { theme: CONTEXT_COMPONENT_THEME }
+        )
 
         const RESOLVED = {
           componentTheme: CONTEXT_COMPONENT_THEME,
@@ -83,17 +87,15 @@ describe('Function “resolveTheme”', () => {
       })
 
       it('returns the specified “ComponentTheme”', () => {
-        const COMP_A = {
-          ...CONTEXT_WITH_COMPONENT_THEME,
-          identifier: undefined,
-          props: { theme: NORMAL_COMPONENT_THEME }
-        }
+        const COMP_A = new SomeComponentA(
+          { theme: NORMAL_COMPONENT_THEME },
+          { theme: CONTEXT_COMPONENT_THEME }
+        )
 
-        const COMP_B = {
-          ...CONTEXT_WITH_COMPONENT_THEME,
-          identifier: undefined,
-          props: { theme: NORMAL_COMPONENT_THEME }
-        }
+        const COMP_B = new SomeComponentB(
+          { theme: NORMAL_COMPONENT_THEME },
+          { theme: CONTEXT_COMPONENT_THEME }
+        )
 
         const RESOLVED = {
           componentTheme: NORMAL_COMPONENT_THEME,
@@ -107,11 +109,10 @@ describe('Function “resolveTheme”', () => {
       })
 
       it('returns the used “ComponentTheme” from the “Theme” specified', () => {
-        const COMP = {
-          ...CONTEXT_WITH_COMPONENT_THEME,
-          identifier: 'custom-string',
-          props: { theme: NORMAL_THEME }
-        }
+        const COMP = new SomeComponentB(
+          { theme: NORMAL_THEME },
+          { theme: CONTEXT_COMPONENT_THEME }
+        )
 
         const RESOLVED = {
           componentTheme: NORMAL_COMPONENT_THEME,
@@ -126,28 +127,25 @@ describe('Function “resolveTheme”', () => {
 
     describe('a “Theme” in the context', () => {
       it('returns “undefined” if the component has no identifier', () => {
-        const COMP_A1 = {
-          ...CONTEXT_WITH_THEME,
-          identifier: undefined,
-          props: undefined
-        }
+        const COMP_A1 = new SomeComponentA(
+          {},
+          { theme: CONTEXT_THEME }
+        )
 
-        const COMP_A2 = {
-          ...CONTEXT_WITH_THEME,
-          identifier: undefined,
-          props: { theme: NORMAL_THEME }
-        }
+        const COMP_A2 = new SomeComponentA(
+          { theme: NORMAL_THEME },
+          { theme: CONTEXT_THEME }
+        )
 
         expect(resolveTheme(COMP_A1)).toBeUndefined()
         expect(resolveTheme(COMP_A2)).toBeUndefined()
       })
 
       it('returns the used “ComponentTheme” from the “Theme” loaded from the context', () => {
-        const COMP = {
-          ...CONTEXT_WITH_THEME,
-          identifier: 'custom-string',
-          props: undefined
-        }
+        const COMP = new SomeComponentB(
+          {},
+          { theme: CONTEXT_THEME }
+        )
 
         const RESOLVED = {
           componentTheme: CONTEXT_COMPONENT_THEME,
@@ -155,21 +153,20 @@ describe('Function “resolveTheme”', () => {
           source: 'context',
           theme: CONTEXT_THEME
         }
+
         expect(resolveTheme(COMP)).toEqual(RESOLVED)
       })
 
       it('returns the “ComponentTheme” specified', () => {
-        const COMP_A = {
-          ...CONTEXT_WITH_THEME,
-          identifier: undefined,
-          props: { theme: NORMAL_COMPONENT_THEME }
-        }
+        const COMP_A = new SomeComponentA(
+          { theme: NORMAL_COMPONENT_THEME },
+          { theme: CONTEXT_THEME }
+        )
 
-        const COMP_B = {
-          ...CONTEXT_WITH_THEME,
-          identifier: 'custom-string',
-          props: { theme: NORMAL_COMPONENT_THEME }
-        }
+        const COMP_B = new SomeComponentB(
+          { theme: NORMAL_COMPONENT_THEME },
+          { theme: CONTEXT_THEME }
+        )
 
         const RESOLVED = {
           componentTheme: NORMAL_COMPONENT_THEME,
@@ -183,11 +180,10 @@ describe('Function “resolveTheme”', () => {
       })
 
       it('returns the used “ComponentTheme” from the “Theme” specified', () => {
-        const COMP = {
-          ...CONTEXT_WITH_THEME,
-          identifier: 'custom-string',
-          props: { theme: NORMAL_THEME }
-        }
+        const COMP = new SomeComponentB(
+          { theme: NORMAL_THEME },
+          { theme: CONTEXT_THEME }
+        )
 
         const RESOLVED = {
           componentTheme: NORMAL_COMPONENT_THEME,
@@ -202,34 +198,30 @@ describe('Function “resolveTheme”', () => {
 
     describe('nothing in the context', () => {
       it('returns “undefined” if the component has no identifier', () => {
-        const COMP_A1 = {
-          context: undefined,
-          identifier: undefined,
-          props: undefined
-        }
+        const COMP_A1 = new SomeComponentA(
+          {},
+          {}
+        )
 
-        const COMP_A2 = {
-          context: undefined,
-          identifier: undefined,
-          props: { theme: NORMAL_THEME }
-        }
+        const COMP_A2 = new SomeComponentA(
+          { theme: NORMAL_THEME },
+          {}
+        )
 
         expect(resolveTheme(COMP_A1)).toBeUndefined()
         expect(resolveTheme(COMP_A2)).toBeUndefined()
       })
 
       it('returns the “ComponentTheme” specified', () => {
-        const COMP_A = {
-          context: undefined,
-          identifier: undefined,
-          props: { theme: NORMAL_COMPONENT_THEME }
-        }
+        const COMP_A = new SomeComponentA(
+          { theme: NORMAL_COMPONENT_THEME },
+          {}
+        )
 
-        const COMP_B = {
-          context: undefined,
-          identifier: 'custom-string',
-          props: { theme: NORMAL_COMPONENT_THEME }
-        }
+        const COMP_B = new SomeComponentB(
+          { theme: NORMAL_COMPONENT_THEME },
+          {}
+        )
 
         const RESOLVED = {
           componentTheme: NORMAL_COMPONENT_THEME,
@@ -243,11 +235,10 @@ describe('Function “resolveTheme”', () => {
       })
 
       it('returns the used “ComponentTheme” from the “Theme” specified', () => {
-        const COMP = {
-          context: undefined,
-          identifier: 'custom-string',
-          props: { theme: NORMAL_THEME }
-        }
+        const COMP = new SomeComponentB(
+          { theme: NORMAL_THEME },
+          {}
+        )
 
         const RESOLVED = {
           componentTheme: NORMAL_COMPONENT_THEME,

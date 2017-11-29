@@ -30,4 +30,24 @@ describe.skip('Function “resolveFlair”', () => {
       expect(RESOLVED_FLAIR.presenter).toBe(EXPECTED_PRESENTER)
     })
   }
+
+  const BOGUS_THEMES = [
+    undefined,
+    null,
+    0,
+    123,
+    '',
+    '...',
+    {},
+    { componentTheme: {}},
+    { componentTheme: { flairs: null }},
+    { componentTheme: { presenters: null }},
+    { componentTheme: { flairs: null, presenters: null }}
+  ]
+
+  for (const BOGUS_THEME of BOGUS_THEMES) {
+    it(`returns undefined for “${BOGUS_THEME}”`, () => {
+      expect(resolveFlair(BOGUS_THEME, 'some!pattern')).toBeUndefined()
+    })
+  }
 })

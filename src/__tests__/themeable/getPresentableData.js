@@ -31,11 +31,13 @@ describe('method ”getPresentableData', () => {
 
     const COMP_A = new SomeComponentA
     const COMP_B = new SomeComponentB
+
     const SPY_A = jest.spyOn(COMP_A, 'getThemeableData')
     const SPY_B = jest.spyOn(COMP_B, 'getThemeableData')
 
     expect(COMP_A.getPresentableData()).toBe(123)
     expect(COMP_B.getPresentableData()).toBe(456)
+
     expect(SPY_A).toHaveBeenCalled()
     expect(SPY_B).toHaveBeenCalled()
   })

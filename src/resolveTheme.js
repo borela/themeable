@@ -45,10 +45,17 @@ type ExpectedData = {
   props?:Object
 }
 
+export type ResolvedTheme = {
+  componentTheme:ComponentTheme,
+  identifier?:string,
+  source:string,
+  theme?:Theme
+}
+
 /**
  * Tries to resolve the component theme from the properties and context.
  */
-export function resolveTheme(data:ExpectedData) {
+export function resolveTheme(data:ExpectedData):ResolvedTheme {
   if (!data)
     return undefined
   let { context, identifier, props } = data

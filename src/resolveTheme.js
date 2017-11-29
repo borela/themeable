@@ -12,7 +12,7 @@
 
 import isTheme from './isTheme'
 
-function _resolveTheme(source, data, identifier) {
+function _resolveTheme(source:string, data:Object, identifier:string) {
   if (!data)
     return undefined
 

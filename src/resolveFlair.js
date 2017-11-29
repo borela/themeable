@@ -11,6 +11,7 @@
 // the License.
 // @flow
 
+import type { ResolvedTheme } from '../resolveTheme'
 import { Component } from 'react'
 
 export type ResolvedFlair = {|
@@ -18,52 +19,72 @@ export type ResolvedFlair = {|
   presenter?:Component<*>
 |}
 
-const NO_FLAIR_RESOLVED = {
-  flair: undefined,
-  presenter: undefined
+/**
+ * Remove unnecessary spaces in resolved flairs.
+ */
+function normalizeFlair(resolvedFlair:ResolvedFlair):ResolvedFlair {
+  let { flair, presenter } = resolvedFlair
+  return {
+    flair: flair.replace(/\s+/g, ' ').trim(),
+    presenter
+  }
 }
 
 const EXTRACTOR = /\s*(\w+(?:\s+\w+)*)?(?:\s*!\s*(\w+))?\s*/
 
-export function resolveFlair(resolvedTheme, pattern):ResolvedFlair {
-  if (!resolvedTheme.componentTheme)
-    return NO_FLAIR_RESOLVED
+/**
+ * Returns the resulting flair and presenter from the resolved theme using the
+ * specified pattern.
+ *
+ * @param pattern
+ * A pattern
+ */
+export function resolveFlair(resolvedTheme:ResolvedTheme, pattern:string):ResolvedFlair {
+  const COMPONENT_THEME = resolvedTheme?.componentTheme
+  if (!COMPONENT_THEME)
+    return undefined
 
-  const COMPONENT_THEME = resolvedTheme.componentTheme
-  const DEFAULT_FLAIR = COMPONENT_THEME.flairs.default
-  const DEFAULT_PRESENTER = COMPONENT_THEME.presenters.default
+  const FLAIRS = COMPONENT_THEME.flairs
+  const PRESENTERS = COMPONENT_THEME.presenters
 
-  let flair = COMPONENT_THEME.flairs[DEFAULT_FLAIR]
-  let presenter = COMPONENT_THEME.presenters[DEFAULT_PRESENTER]
+  if (!FLAIRS && !PRESENTERS)
+    return undefined
+
+  const DEFAULT_FLAIR = FLAIRS[FLAIRS.default] || {}
+  const DEFAULT_PRESENTER = PRESENTERS[PRESENTERS.default] || {}
+
+  let flair = DEFAULT_FLAIR
+  let presenter = DEFAULT_PRESENTER
 
   if (!pattern)
-    return { flair, presenter }
+    return normalizeFlair({ flair, presenter })
 
+  // Extract the flair and presenter portion from the pattern passed.
   const MATCHES = EXTRACTOR.exec(pattern)
   if (!MATCHES)
-    return { flair, presenter }
+    return normalizeFlair({ flair, presenter })
 
   const TARGET_FLAIRS = MATCHES[1]
   const TARGET_PRESENTER = MATCHES[2]
 
+  // If there's a custom presenter, try to extract it.
   if (TARGET_PRESENTER)
-    presenter = COMPONENT_THEME.presenters[TARGET_PRESENTER]
+    presenter = PRESENTERS[TARGET_PRESENTER] || DEFAULT_PRESENTER
 
+  // There are no custom flairs.
   if (!TARGET_FLAIRS)
-    return { flair, presenter }
+    return normalizeFlair({ flair, presenter })
 
+  // Extract each flair from the component theme and concatenate into a string.
   flair = ''
   for (const TARGET of TARGET_FLAIRS.split(/\s+/)) {
-    const EXTRACTED = COMPONENT_THEME.flairs[TARGET]
+    const EXTRACTED = FLAIRS[TARGET]
     if (!EXTRACTED)
       continue
     flair += ` ${Array.isArray(EXTRACTED) ? EXTRACTED.join(' ') : EXTRACTED}`
   }
 
-  // Remove unnecessary spaces.
-  flair = flair.replace(/\s+/g, ' ').trim()
-
-  return { flair, presenter }
+  return normalizeFlair({ flair, presenter })
 }
 
 export default resolveFlair

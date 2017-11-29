@@ -10,6 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import isThemeable from './isThemeable'
 import type { ResolvedTheme } from '../resolveTheme'
 import { Component } from 'react'
 
@@ -38,7 +39,10 @@ const EXTRACTOR = /\s*(\w+(?:\s+\w+)*)?(?:\s*!\s*(\w+))?\s*/
  * @param pattern
  * A pattern
  */
-export function resolveFlair(resolvedTheme:ResolvedTheme, pattern:string):ResolvedFlair {
+export function resolveFlair(target:Component<*>, resolvedTheme:ResolvedTheme):ResolvedFlair {
+  if (!isThemeable(target))
+    return undefined
+
   const COMPONENT_THEME = resolvedTheme?.componentTheme
   if (!COMPONENT_THEME)
     return undefined
@@ -54,12 +58,13 @@ export function resolveFlair(resolvedTheme:ResolvedTheme, pattern:string):Resolv
 
   let flair = DEFAULT_FLAIR
   let presenter = DEFAULT_PRESENTER
+  const PATTERN = target.props?.flair
 
-  if (!pattern)
+  if (!PATTERN)
     return normalizeFlair({ flair, presenter })
 
   // Extract the flair and presenter portion from the pattern passed.
-  const MATCHES = EXTRACTOR.exec(pattern)
+  const MATCHES = EXTRACTOR.exec(PATTERN)
   if (!MATCHES)
     return normalizeFlair({ flair, presenter })
 

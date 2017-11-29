@@ -11,6 +11,8 @@
 // the License.
 
 import resolveFlair from '../resolveFlair'
+import themeable from '../themeable'
+import { Component } from 'react'
 import { NORMAL as NORMAL_COMPONENT_THEME } from 'AwesomeComponentTheme'
 import { NORMAL as NORMAL_THEME } from 'AwesomeTheme'
 import { TEST_DATA } from 'data'
@@ -22,10 +24,14 @@ const RESOLVED_THEME = {
   theme: NORMAL_THEME
 }
 
-describe.skip('Function “resolveFlair”', () => {
+@themeable
+class SomeComponent extends Component {}
+
+describe('Function “resolveFlair”', () => {
   for (const [ PATTERN, EXPECTED_FLAIR, EXPECTED_PRESENTER ] of TEST_DATA) {
     test(`using the pattern “${PATTERN}”`, () => {
-      const RESOLVED_FLAIR = resolveFlair(RESOLVED_THEME, PATTERN)
+      const COMP = new SomeComponent({ flair: PATTERN })
+      const RESOLVED_FLAIR = resolveFlair(COMP, RESOLVED_THEME)
       expect(RESOLVED_FLAIR.flair).toBe(EXPECTED_FLAIR)
       expect(RESOLVED_FLAIR.presenter).toBe(EXPECTED_PRESENTER)
     })
@@ -47,7 +53,8 @@ describe.skip('Function “resolveFlair”', () => {
 
   for (const BOGUS_THEME of BOGUS_THEMES) {
     it(`returns undefined for “${BOGUS_THEME}”`, () => {
-      expect(resolveFlair(BOGUS_THEME, 'some!pattern')).toBeUndefined()
+      const COMP = new SomeComponent({ flair: 'some!pattern '})
+      expect(resolveFlair(COMP, BOGUS_THEME)).toBeUndefined()
     })
   }
 })

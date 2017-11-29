@@ -51,7 +51,6 @@ export type ResolvedTheme = {
  * Tries to resolve the component theme from the properties and context.
  */
 export function resolveTheme(target:Component<*>):ResolvedTheme {
-  debugger;
   if (!isThemeable(target))
     return undefined
   let { context, props } = target

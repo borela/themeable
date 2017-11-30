@@ -10,38 +10,46 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import isThemeable from '../isThemeable'
+import themeable from '../themeable'
 import { Component } from 'react'
-import { isThemeable, themeable } from '..'
 
 describe('Function “isThemeable”', () => {
   class NonThemeable extends Component {}
 
+  @themeable
+  class ThemeableComponentA extends Component {}
+
   @themeable('custom-string')
-  class SomeComponent extends Component {}
+  class ThemeableComponentB extends Component {}
 
-  describe('Used on themeable', () => {
-    it('returns “true” on class', () => {
-      expect(isThemeable(SomeComponent))
-        .toBe(true)
-    })
+  const THEMEABLES = [
+    ThemeableComponentA,
+    ThemeableComponentB,
+    new ThemeableComponentA,
+    new ThemeableComponentB
+  ]
 
-    it('returns “true” on instance', () => {
-      const INSTANCE = new SomeComponent
-      expect(isThemeable(INSTANCE))
-        .toBe(true)
-    })
-  })
+  const NON_THEMEABLES = [
+    NonThemeable,
+    new NonThemeable,
+    undefined,
+    null,
+    0,
+    42,
+    '',
+    '...'
+  ]
 
-  describe('Used on non themeable', () => {
-    it('returns “false” on class', () => {
-      expect(isThemeable(NonThemeable))
-        .toBe(false)
+  for (const THEMEABLE of THEMEABLES) {
+    it(`returns “true” for “${THEMEABLE}”`, () => {
+      expect(isThemeable(THEMEABLE)).toBe(true)
     })
+  }
 
-    it('returns “false” on instance', () => {
-      const INSTANCE = new NonThemeable
-      expect(isThemeable(INSTANCE))
-        .toBe(false)
+  for (const NON_THEMEABLE of NON_THEMEABLES) {
+    it(`returns “false” for “${NON_THEMEABLE}”`, () => {
+      expect(isThemeable(NON_THEMEABLE)).toBe(false)
     })
-  })
+  }
 })

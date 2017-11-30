@@ -1,12 +1,12 @@
 {
   "name": "themeable",
-  "version": "2.4.4",
+  "version": "3.0.0",
   "description": "Decorator to enable theming on ReactJS smart components.",
   "license": "Apache-2.0",
   "main": "build",
   "scripts": {
-    "clean": "rimraf \"build/!(.git)\"",
     "build": "npm run clean && babel src -d build --ignore **/__*__/** -s",
+    "clean": "rimraf \"build/!(.git)\"",
     "dev": "jest src --verbose --watch",
     "start": "npm run dev",
     "test": "jest src --verbose"
@@ -36,17 +36,17 @@
     "url": "http://www.borela.tech"
   },
   "dependencies": {
-    "presentable": "^3.4.1",
+    "presentable": "^4.0.0",
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
-    "@ctrine/babel-preset-lib": "^3.0.0",
-    "@ctrine/toolbox": "^6.0.2",
-    "pad": "^1.2.1",
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2"
+    "@ctrine/babel-preset-lib": "^3.3.1",
+    "@ctrine/toolbox": "^7.4.0",
+    "pad": "^2.0.3",
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0"
   },
   "peerDependencies": {
-    "react": "^15.6.1 || ^16.0.0"
+    "react": "^16.1.0"
   }
 }

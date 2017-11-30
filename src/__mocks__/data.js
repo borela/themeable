@@ -13,6 +13,8 @@
 import BarPresenter from './BarPresenter'
 import FooPresenter from './FooPresenter'
 import pad from 'pad'
+import { CONTEXT as CONTEXT_COMPONENT_THEME } from 'AwesomeComponentTheme'
+import { CONTEXT as CONTEXT_THEME } from 'AwesomeTheme'
 
 const NORMALIZED_BLUE_FLAIR = 'blueA blueB blueC'
 const NORMALIZED_RED_FLAIR = 'redA redB redC'
@@ -20,10 +22,12 @@ const NORMALIZED_GREEN_FLAIR = 'greenA greenB greenC'
 const NORMALIZED_RED_GREEN_FLAIRS = 'redA redB redC greenA greenB greenC'
 const NORMALIZED_GREEN_RED_FLAIRS = 'greenA greenB greenC redA redB redC'
 
+const DEFAULT_PRESENTER = BarPresenter
+const DEFAULT_NORMALIZED_FLAIR = NORMALIZED_BLUE_FLAIR
+
+// Flairs before being concatenated.
 const RAW_FLAIRS = [
-  // Default flair.
-  [[ '' ], NORMALIZED_BLUE_FLAIR ],
-  // Specific flairs.
+  [[ '' ], DEFAULT_NORMALIZED_FLAIR ],
   [[ 'red' ], NORMALIZED_RED_FLAIR ],
   [[ 'green' ], NORMALIZED_GREEN_FLAIR ],
   [[ 'red', 'green' ], NORMALIZED_RED_GREEN_FLAIRS ],
@@ -31,9 +35,7 @@ const RAW_FLAIRS = [
 ]
 
 const PRESENTERS = [
-  // Default presenter.
-  [ '', BarPresenter ],
-  // Specific presenters.
+  [ '', DEFAULT_PRESENTER ],
   [ 'bar', BarPresenter ],
   [ 'foo', FooPresenter ]
 ]
@@ -41,9 +43,9 @@ const PRESENTERS = [
 // Generate a dataset combining the flairs and presenters patterns.
 function combinedData(flairs, presenters) {
   let result = []
-  for (let [ flairPattern, flair ] of flairs) {
+  for (let [ flairPattern, normalizedFlair ] of flairs) {
     for (let [ presenterPattern, presenter ] of presenters)
-      result.push([ `${flairPattern}!${presenterPattern}`, flair, presenter ])
+      result.push([ `${flairPattern}!${presenterPattern}`, normalizedFlair, presenter ])
   }
   return result
 }
@@ -58,7 +60,7 @@ function joinFlairs(data) {
       continue
     }
     // Concatenate the flairs using one, two and three spaces.
-    for (let i = 1; i < 3; i++) {
+    for (let i = 1; i <= 3; i++) {
       const SPACES = pad('', i)
       result.push([ targetStringArray.join(SPACES), ...rest ])
     }
@@ -66,15 +68,26 @@ function joinFlairs(data) {
   return result
 }
 
-// Used to add spaces around the data.
+// Used to add spaces around the pattern.
 function padData(data) {
   let result = []
   for (let [ targetString, ...rest ] of data) {
-    for (let i = 1; i < 3; i++) {
+    // We are testing for up to 3 spaces and for empty strings we’ll use this
+    // condition to prevent duplicates.
+    if (targetString === '') {
+      result.push([ ' ', ...rest ])
+      result.push([ '  ', ...rest ])
+      result.push([ '   ', ...rest ])
+      continue
+    }
+
+    // Other strings, add up to 3 spaces to the left and right.
+    for (let i = 1; i <= 3; i++) {
+      const LENGHT = targetString.length
       // Add spaces to the right.
-      result.push([ pad(targetString, i), ...rest ])
+      result.push([ pad(targetString, LENGHT + i), ...rest ])
       // Add spaces to the left.
-      result.push([ pad(i, targetString), ...rest ])
+      result.push([ pad(LENGHT + i, targetString), ...rest ])
     }
   }
   return result
@@ -88,9 +101,11 @@ const COMBINED_DATA = combinedData(
   [ ...PRESENTERS, ...PADDED_PRESENTERS ]
 )
 
+// Each row in the test data consists of a pattern, the expected normalized
+// flair and presenter.
 export const TEST_DATA = [
-  // No flair pattern.
-  [ undefined, NORMALIZED_BLUE_FLAIR, BarPresenter ],
+  // No pattern, we expect the default flair and presenter to be used.
+  [ undefined, DEFAULT_NORMALIZED_FLAIR, DEFAULT_PRESENTER ],
   // Other combinations.
   ...COMBINED_DATA
 ]

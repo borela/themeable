@@ -15,15 +15,15 @@ import { Component } from 'react'
 /**
  * A component theme holds the flairs and presenters for a component.
  */
-export type ComponentTheme = {
+export type ComponentTheme = {|
   // A flair is a unique string that maps to a set of CSS classes.
   flairs:{|
     [string]:string|string[],
-    default:string
+    default?:string
   |},
   // Presenters bundled with the theme.
   presenters:{|
     [string]:Component,
-    default:string
+    default?:string
   |}
-}
+|}

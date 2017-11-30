@@ -10,17 +10,4 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import PropTypes from 'prop-types'
-import { Component } from 'react'
-
-export class ThemeableContext extends Component {
-  static childContextTypes = {
-    theme: PropTypes.object
-  }
-
-  getChildContext() {
-    return { theme: this.props.theme }
-  }
-}
-
-export default ThemeableContext
+module.exports = require('@ctrine/jest-settings').default

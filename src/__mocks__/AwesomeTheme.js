@@ -10,7 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import { NORMAL as NORMAL_COMPONENT_THEME } from './AwesomeComponentTheme'
+import {
+  CONTEXT as CONTEXT_COMPONENT_THEME,
+  NORMAL as NORMAL_COMPONENT_THEME
+} from './AwesomeComponentTheme'
 
 const METADATA = {
   author: {
@@ -26,6 +29,14 @@ export const NORMAL = {
   ...METADATA,
   componentThemes: {
     'custom-string': NORMAL_COMPONENT_THEME
+  }
+}
+
+export const CONTEXT = {
+  ...METADATA,
+  a: 1, b: 2, c: 3,
+  componentThemes: {
+    'custom-string': CONTEXT_COMPONENT_THEME
   }
 }
 

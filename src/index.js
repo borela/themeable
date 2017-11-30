@@ -10,9 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export { ComponentTheme } from './ComponentTheme'
-export { isThemeable } from './isThemeable'
-export { Theme } from './Theme'
-export { themeable } from './themeable'
-export { ThemeableContext } from './ThemeableContext'
+export * from './ComponentTheme'
+export * from './isTheme'
+export * from './isThemeable'
+export * from './resolveFlair'
+export * from './resolveThemeableData'
+export * from './resolveTheme'
+export * from './Theme'
+export * from './themeable'
+export * from './ThemeableContext'
 export default from './themeable'

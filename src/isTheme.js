@@ -10,17 +10,11 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import PropTypes from 'prop-types'
-import { Component } from 'react'
-
-export class ThemeableContext extends Component {
-  static childContextTypes = {
-    theme: PropTypes.object
-  }
-
-  getChildContext() {
-    return { theme: this.props.theme }
-  }
+/**
+ * Checks if an object has the format of a “Theme’, not a “ComponentTheme”.
+ */
+export function isTheme(target) {
+  return target?.componentThemes !== undefined
 }
 
-export default ThemeableContext
+export default isTheme

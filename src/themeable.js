@@ -30,7 +30,7 @@ function decorateComponent(identifier) {
     // Allow the identifier to be modified without affecting an already themeable
     // component.
     prototype.getThemeableIdentifier = function() {
-      return identifier
+      return identifier ?? prototype.constructor.name
     }
 
     if (isThemeable(targetComponent))

@@ -14,20 +14,33 @@ import { Component } from 'react'
 import themeable from '../../themeable'
 
 describe('method ”getThemeableIdentifier”', () => {
-  @themeable
-  class SomeComponentA extends Component {}
+  const CUSTOM_IDENTIFIERS = [
+    0,
+    123,
+    '',
+    '...'
+  ]
 
-  @themeable('custom-string')
-  class SomeComponentB extends Component {}
+  for (const CUSTOM_IDENTIFIER of CUSTOM_IDENTIFIERS) {
+    @themeable(CUSTOM_IDENTIFIER)
+    class SomeComponent extends Component {}
+    const COMP = new SomeComponent
+    it(`returns the specified identifier “${CUSTOM_IDENTIFIER}”`, () => {
+      expect(COMP.getThemeableIdentifier()).toBe(CUSTOM_IDENTIFIER)
+    })
+  }
 
-  const COMP_A = new SomeComponentA
-  const COMP_B = new SomeComponentB
+  const UNDEFINED_IDENTIFIERS = [
+    undefined,
+    null
+  ]
 
-  it('returns undefined if no identifier is provided', () => {
-    expect(COMP_A.getThemeableIdentifier()).toBeUndefined()
-  })
-
-  it('returns the identifier if one was provided', () => {
-    expect(COMP_B.getThemeableIdentifier()).toBe('custom-string')
-  })
+  for (const UNDEFINED_IDENTIFIER of UNDEFINED_IDENTIFIERS) {
+    @themeable(UNDEFINED_IDENTIFIER)
+    class SomeComponent extends Component {}
+    const COMP = new SomeComponent
+    it(`returns the class name for “${UNDEFINED_IDENTIFIER}”`, () => {
+      expect(COMP.getThemeableIdentifier()).toBe('SomeComponent')
+    })
+  }
 })

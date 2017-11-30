@@ -53,7 +53,7 @@ describe('Function “resolveFlair”', () => {
 
   for (const BOGUS_THEME of BOGUS_THEMES) {
     it(`returns undefined for “${BOGUS_THEME}”`, () => {
-      const COMP = new SomeComponent({ flair: 'some!pattern '})
+      const COMP = new SomeComponent({ flair: 'some!pattern' })
       expect(resolveFlair(COMP, BOGUS_THEME)).toBeUndefined()
     })
   }

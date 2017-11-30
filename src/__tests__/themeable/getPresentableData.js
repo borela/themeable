@@ -10,35 +10,56 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import { NORMAL as NORMAL_THEME } from 'AwesomeTheme'
 import themeable from '../../themeable'
 import { Component } from 'react'
 
 describe('method ”getPresentableData', () => {
-  it('returns the value from “getThemeableData”', () => {
-    @themeable
-    class SomeComponentA extends Component {
-      getThemeableData() {
-        return 123
-      }
+  const CONTEXT = { contextA: 1, contextB: 2, contextC: 3 }
+  const PROPS = { propA: 1, propB: 2, propC: 3 }
+  const STATE = { stateA: 1, stateB: 2, stateC: 3 }
+
+  @themeable('custom-string')
+  class SomeComponent extends Component {
+    state = STATE
+  }
+
+  it('returns the expected data without presentable and themeable meta properties', () => {
+    const COMP_A_PROPS = {
+      flair: 'red',
+      presenter: null,
+      theme: NORMAL_THEME,
+      ...PROPS
     }
 
-    @themeable('custom-string')
-    class SomeComponentB extends Component {
-      getThemeableData() {
-        return 456
-      }
+    const COMP_A = new SomeComponent(COMP_A_PROPS, CONTEXT)
+
+    expect(COMP_A.getPresentableData()).toEqual({
+      context: CONTEXT,
+      props: {
+        className: 'redA redB redC',
+        ...PROPS
+      },
+      state: STATE
+    })
+
+    const COMP_B_PROPS = {
+      className: 'foo bar baz',
+      flair: 'red',
+      presenter: null,
+      theme: NORMAL_THEME,
+      ...PROPS
     }
 
-    const COMP_A = new SomeComponentA
-    const COMP_B = new SomeComponentB
+    const COMP_B = new SomeComponent(COMP_B_PROPS, CONTEXT)
 
-    const SPY_A = jest.spyOn(COMP_A, 'getThemeableData')
-    const SPY_B = jest.spyOn(COMP_B, 'getThemeableData')
-
-    expect(COMP_A.getPresentableData()).toBe(123)
-    expect(COMP_B.getPresentableData()).toBe(456)
-
-    expect(SPY_A).toHaveBeenCalled()
-    expect(SPY_B).toHaveBeenCalled()
+    expect(COMP_B.getPresentableData()).toEqual({
+      context: CONTEXT,
+      props: {
+        className: 'foo bar baz redA redB redC',
+        ...PROPS
+      },
+      state: STATE
+    })
   })
 })

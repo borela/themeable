@@ -109,15 +109,3 @@ export const TEST_DATA = [
   // Other combinations.
   ...COMBINED_DATA
 ]
-
-export const CONTEXT_WITH_COMPONENT_THEME = {
-  context: {
-    theme: CONTEXT_COMPONENT_THEME
-  }
-}
-
-export const CONTEXT_WITH_THEME = {
-  context: {
-    theme: CONTEXT_THEME
-  }
-}

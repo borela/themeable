@@ -48,28 +48,6 @@ describe('Function “resolveTheme”', () => {
 
   describe('when there’s', () => {
     describe('a “ComponentTheme” in the context', () => {
-      it('returns the “ComponentTheme” from the context if the component has no identifier', () => {
-        const COMP_A1 = new SomeComponentA(
-          {},
-          { theme: CONTEXT_COMPONENT_THEME }
-        )
-
-        const COMP_A2 = new SomeComponentA(
-          { theme: NORMAL_THEME },
-          { theme: CONTEXT_COMPONENT_THEME }
-        )
-
-        const RESOLVED = {
-          componentTheme: CONTEXT_COMPONENT_THEME,
-          identifier: undefined,
-          source: 'context',
-          theme: undefined
-        }
-
-        expect(resolveTheme(COMP_A1)).toEqual(RESOLVED)
-        expect(resolveTheme(COMP_A2)).toEqual(RESOLVED)
-      })
-
       it('returns the “ComponentTheme” from the context if no theme is specified', () => {
         const COMP = new SomeComponentB(
           {},
@@ -126,21 +104,6 @@ describe('Function “resolveTheme”', () => {
     })
 
     describe('a “Theme” in the context', () => {
-      it('returns “undefined” if the component has no identifier', () => {
-        const COMP_A1 = new SomeComponentA(
-          {},
-          { theme: CONTEXT_THEME }
-        )
-
-        const COMP_A2 = new SomeComponentA(
-          { theme: NORMAL_THEME },
-          { theme: CONTEXT_THEME }
-        )
-
-        expect(resolveTheme(COMP_A1)).toBeUndefined()
-        expect(resolveTheme(COMP_A2)).toBeUndefined()
-      })
-
       it('returns the used “ComponentTheme” from the “Theme” loaded from the context', () => {
         const COMP = new SomeComponentB(
           {},
@@ -197,21 +160,6 @@ describe('Function “resolveTheme”', () => {
     })
 
     describe('nothing in the context', () => {
-      it('returns “undefined” if the component has no identifier', () => {
-        const COMP_A1 = new SomeComponentA(
-          {},
-          {}
-        )
-
-        const COMP_A2 = new SomeComponentA(
-          { theme: NORMAL_THEME },
-          {}
-        )
-
-        expect(resolveTheme(COMP_A1)).toBeUndefined()
-        expect(resolveTheme(COMP_A2)).toBeUndefined()
-      })
-
       it('returns the “ComponentTheme” specified', () => {
         const COMP_A = new SomeComponentA(
           { theme: NORMAL_COMPONENT_THEME },

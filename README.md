@@ -1,4 +1,8 @@
 [![Themeable](art/logo.png)][themeable]
+
+[![React](https://img.shields.io/:react-%5E15%7C%5E16-green.svg?style=flat-square)][themeable]
+[![License](http://img.shields.io/:license-apache-blue.svg?style=flat-square)][themeable]
+
 Decorator to enable theming on ReactJS smart components.
 
 ## Table of contents

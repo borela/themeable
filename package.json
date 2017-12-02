@@ -47,6 +47,6 @@
     "react-dom": "^16.1.0"
   },
   "peerDependencies": {
-    "react": "^16.1.0"
+    "react": "^15.6.1 || ^16.0.0"
   }
 }

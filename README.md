@@ -1,3 +1,4 @@
+[![Themeable](art/logo.png)][themeable]
 Decorator to enable theming on ReactJS smart components.
 
 ## Table of contents
@@ -282,3 +283,4 @@ be used and the “!presenter” part can be ommitted entirely.
   ```
 
 [presentable]:https://github.com/borela/presentable
+[themeable]: //github.com/borela/themeable

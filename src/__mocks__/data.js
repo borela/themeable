@@ -80,7 +80,6 @@ function padData(data) {
       result.push([ '   ', ...rest ])
       continue
     }
-
     // Other strings, add up to 3 spaces to the left and right.
     for (let i = 1; i <= 3; i++) {
       const LENGHT = targetString.length
@@ -104,8 +103,6 @@ const COMBINED_DATA = combinedData(
 // Each row in the test data consists of a pattern, the expected normalized
 // flair and presenter.
 export const TEST_DATA = [
-  // No pattern, we expect the default flair and presenter to be used.
   [ undefined, DEFAULT_NORMALIZED_FLAIR, DEFAULT_PRESENTER ],
-  // Other combinations.
   ...COMBINED_DATA
 ]

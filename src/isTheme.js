@@ -10,9 +10,6 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-/**
- * Checks if an object has the format of a “Theme’, not a “ComponentTheme”.
- */
 export function isTheme(target) {
   return target?.componentThemes !== undefined
 }

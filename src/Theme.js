@@ -18,10 +18,7 @@ type Author = {|
   url?:string
 |}
 
-/**
- * A theme is an configuration object that holds metadata and the actual
- * component themes.
- */
+// A theme is a collection of component themes and metadata about the creator.
 export type Theme = {|
   // Theme author(s).
   author?:Author|Author[],

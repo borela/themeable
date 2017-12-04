@@ -81,14 +81,7 @@ function decorateComponent(identifier) {
   }
 }
 
-/**
- * Enables theming support for a ReactJS component.
- *
- * @param identifierOrComponent
- * A unique identifier used to select the “ComponentTheme” inside the “Theme” or
- * the component to enable theming. If the component has no identifier, it’ll
- * only support themes passed directly to it.
- */
+// Enables theming support for a ReactJS component.
 export function themeable(identifierOrComponent:string|Class<Component<*>>) {
   // It’s a component.
   if (identifierOrComponent && identifierOrComponent.prototype instanceof Component)

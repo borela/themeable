@@ -47,9 +47,7 @@ export type ResolvedTheme = {
   theme?:Theme
 }
 
-/**
- * Tries to resolve the component theme from the properties and context.
- */
+// Tries to resolve the component theme from the properties and context.
 export function resolveTheme(target:Component<*>):ResolvedTheme {
   if (!isThemeable(target))
     return undefined

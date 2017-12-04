@@ -19,9 +19,7 @@ export type ResolvedFlair = {|
   presenter?:Component<*>
 |}
 
-/**
- * Remove unnecessary spaces in resolved flairs.
- */
+// Remove unnecessary spaces in resolved flairs.
 function normalizeFlair(resolvedFlair:ResolvedFlair):ResolvedFlair {
   let { flair, presenter } = resolvedFlair
   return {
@@ -32,13 +30,8 @@ function normalizeFlair(resolvedFlair:ResolvedFlair):ResolvedFlair {
 
 const EXTRACTOR = /\s*(\w+(?:\s+\w+)*)?(?:\s*!\s*(\w+))?\s*/
 
-/**
- * Returns the resulting flair and presenter from the resolved theme using the
- * specified pattern.
- *
- * @param pattern
- * A pattern
- */
+// Tries to extract the flair and presenter from the resolved theme for the target
+// component.
 export function resolveFlair(target:Component<*>, resolvedTheme:ResolvedTheme):ResolvedFlair {
   if (!isThemeable(target))
     return undefined

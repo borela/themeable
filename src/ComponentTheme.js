@@ -12,9 +12,7 @@
 
 import { Component } from 'react'
 
-/**
- * A component theme holds the flairs and presenters for a component.
- */
+// A component theme is the theme used to render component.
 export type ComponentTheme = {|
   // A flair is a unique string that maps to a set of CSS classes.
   flairs:{|

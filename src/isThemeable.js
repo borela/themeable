@@ -15,9 +15,6 @@ import { Component } from 'react'
 // Symbol used to identify themeable components.
 const SYMBOL = Symbol.for('themeable')
 
-/**
- * Check if the target component supports theming.
- */
 export function isThemeable(targetComponent) {
   if (!targetComponent)
     return false

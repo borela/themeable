@@ -13,6 +13,7 @@ Decorator to enable theming on ReactJS presentable components.
 4. [Context theming](#context-theming)
 5. [Creating a theme kit](#creating-a-theme-kit)
 6. [Using the theme kit](#using-the-theme-kit)
+7. [View resolution](#view-resolution)
 
 ## Installation
 
@@ -159,3 +160,12 @@ const THEME_KIT = {
   {/* Result: <Button>Red Button</Button> */}
 </ContextTheme>
 ```
+
+## View resolution
+
+The view used to render the component will be selected in the following order:
+
+1. A component passed directly to the view property.
+2. Selected view from theme or theme kit passed to the theme property.
+3. Selected view from theme or theme kit in the context.
+4. Default view setted with the `defaultView` decorator from the presentable module.

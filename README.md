@@ -112,7 +112,7 @@ const BUTTON_THEME = {
 // Result: <Button>Blue Button</Button>
 
 // This time we select the red view to render the button. The view property can
-// either accept a view or a string to select a view from the theme.
+// either accept a component or a string to select a view from the theme.
 <MyButton view="red" theme={BUTTON_THEME}/>
 // Result: <Button>Red Button</Button>
 ```

@@ -139,14 +139,13 @@ import { ContexTheme } from 'themeable'
 // A theme kit is a simple object that contains a collection of themes indexed
 // by the component class name.
 const THEME_KIT = {
-  name: 'Rainbow UI',
-  description: 'Theme kit for components with many colors.',
-  author: [{
-    name: 'Someone',
-    email: 'someone@somedomain.com',
-    url: 'www.somedomain.com'
-  }],
-  repository: 'somerepository.com',
+  name: 'Rainbow UI Kit', // Required.
+  version: '1.0.0', // Required.
+  description: 'UI kit with many colors.', // Optional.
+  license: 'Apache-2.0', // Required.
+  author: 'Foo Bar <foo@bar.com> (www.foobar.com)', // Must have at least 1 author.
+  homepage: 'www.foobar.com', // Optional.
+  // A theme kit must have at least 1 theme.
   themes: {
     MyButton: BUTTON_THEME,
     // Other component themes here.

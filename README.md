@@ -72,16 +72,30 @@ class BlueButtonView extends Component {
 // A theme is a simple object containing metadata and a collection of views that
 // can be used to render your themeable component.
 const BUTTON_THEME = {
-  name: 'Rainbow Button',
-  description: 'Button theme with many colors.',
-  author: [{
-    name: 'Someone',
-    email: 'someone@somedomain.com',
-    url: 'www.somedomain.com'
-  }],
-  repository: 'somerepository.com',
+  name: 'Rainbow Button', // Required.
+  version: '1.0.0', // Required.
+  description: 'Button theme with many colors.', // Optional.
+  license: 'Apache-2.0', // Required.
+  // The theme must have at least 1 author, and like NPM, he can be specified as
+  // a simple string:
+  author: 'Foo Bar <foo@bar.com> (www.foobar.com)',
+  // Or an object:
+  author: {
+    name: 'Foo Bar',
+    email: 'foo@bar.com',
+    url: 'www.foobar.com'
+  },
+  // If there are multiple authors, use the authors key, where each item can either
+  // be a string or an object like the author key.
+  authors: [
+    'Foo Bar <foo@bar.com> (www.foobar.com)',
+    'Baz Qux <bar@qux.com> (www.barqux.com)'
+  ],
+  homepage: 'www.foobar.com', // Optional.
+  // The theme must have at least 1 view.
   views: {
-    // Notice that a default view is set on the theme,
+    // The default view is not required but it is recommended to set it as in
+    // most cases users will just use the default view.
     default: BlueButtonView,
     blue: BlueButtonView,
     green: GreenButtonView,

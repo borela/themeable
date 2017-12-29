@@ -179,6 +179,6 @@ const THEME_KIT = {
 The view used to render the component will be selected in the following order:
 
 1. A component passed directly to the view property.
-2. Selected view from theme or theme kit passed to the theme property.
-3. Selected view from theme or theme kit in the context.
+2. Selected view from theme/theme kit specified in the theme property.
+3. Selected view from theme/theme kit in the context.
 4. Default view setted with the `defaultView` decorator from the presentable module.

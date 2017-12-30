@@ -11,9 +11,11 @@ Decorator to enable theming on ReactJS presentable components.
 2. [Creating a theme](#creating-a-theme)
 3. [Rendering the component](#rendering-the-component)
 4. [Context theming](#context-theming)
-5. [Creating a theme kit](#creating-a-theme-kit)
-6. [Using the theme kit](#using-the-theme-kit)
-7. [View resolution](#view-resolution)
+5. [Theme kit](#theme-kit)
+   1. [Creating a theme kit](#creating-a-theme-kit)
+   2. [Using the theme kit](#using-the-theme-kit)
+   3. [Reusing themes on different components](#reusing-themes-on-different-components)
+6. [View resolution](#view-resolution)
 
 ## Installation
 
@@ -133,7 +135,9 @@ import { ContexTheme } from 'themeable'
 </ContextTheme>
 ```
 
-## Creating a theme kit
+## Theme kit
+
+### Creating a theme kit
 
 ```js
 // A theme kit is a simple object that contains a collection of themes indexed
@@ -153,7 +157,7 @@ const THEME_KIT = {
 }
 ```
 
-## Using the theme kit
+### Using the theme kit
 
 ```js
 // The theme will be selected from the kit by the class name, in this case
@@ -174,6 +178,23 @@ const THEME_KIT = {
 </ContextTheme>
 ```
 
+### Reusing themes on different components
+
+If you may want to extend a base component’s functionality but still use the same
+theme from a theme kit it was using to render the base component, you can specify
+the identifier in the themeable decorator:
+
+```js
+// You can apply the themeable decorator as many times as you want, the fact
+@themeable('MyButton')
+class ExtendedButton extends MyButton {
+  // Other extended functionality.
+}
+
+// It’ll use the theme for MyButton in the theme kit to render our extended button.
+<ExtendedBUtton view="red" theme={THEME_KIT}/>
+```
+
 ## View resolution
 
 The view used to render the component will be selected in the following order:
@@ -182,3 +203,4 @@ The view used to render the component will be selected in the following order:
 2. Selected view from theme/theme kit specified in the theme property.
 3. Selected view from theme/theme kit in the context.
 4. Default view setted with the `defaultView` decorator from the presentable module.
+

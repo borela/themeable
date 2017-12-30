@@ -15,7 +15,8 @@ Decorator to enable theming on ReactJS presentable components.
    1. [Creating a theme kit](#creating-a-theme-kit)
    2. [Using the theme kit](#using-the-theme-kit)
    3. [Reusing themes on different components](#reusing-themes-on-different-components)
-6. [View resolution](#view-resolution)
+6. [Default view](#default-view)
+7. [View resolution](#view-resolution)
 
 ## Installation
 
@@ -195,6 +196,32 @@ class ExtendedButton extends MyButton {
 <ExtendedBUtton view="red" theme={THEME_KIT}/>
 ```
 
+## Default view
+
+Because themeables are also presentables, you can set a default view to render
+the component in case no theme or view is available to it:
+
+```js
+import { defaultView } from 'presentable'
+
+class SomeView extends Component {
+  render() {
+    return <button>Rendered using the default view!</button>
+  }
+}
+
+@themeable
+@defaultView(MyDefaultView)
+class YetAnotherButton extends Component {
+  // Some logic here.
+}
+
+// Notice that no theme or view is passed to it, it’ll render using the default
+// view set in the class.
+<YetAnotherButton/>
+// <button>Rendered using the default view!</button>
+```
+
 ## View resolution
 
 The view used to render the component will be selected in the following order:
@@ -203,4 +230,3 @@ The view used to render the component will be selected in the following order:
 2. Selected view from theme/theme kit specified in the theme property.
 3. Selected view from theme/theme kit in the context.
 4. Default view setted with the `defaultView` decorator from the presentable module.
-

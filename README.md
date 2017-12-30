@@ -8,16 +8,18 @@ Decorator to enable theming on ReactJS presentable components.
 ## Table of contents
 
 1. [Installation](#installation)
-2. [Creating a theme](#creating-a-theme)
-3. [Rendering the component](#rendering-the-component)
-4. [Context theming](#context-theming)
-5. [Theme kit](#theme-kit)
+2. [Presentable](#presentable)
+3. [Basic usage](#basic-usage)
+4. [Creating a theme](#creating-a-theme)
+5. [Rendering the component](#rendering-the-component)
+6. [Context theming](#context-theming)
+7. [Theme kit](#theme-kit)
    1. [Creating a theme kit](#creating-a-theme-kit)
    2. [Using the theme kit](#using-the-theme-kit)
    3. [Reusing themes on different components](#reusing-themes-on-different-components)
    4. [Dynamic identifier](#dynamic-identifier)
-6. [Default view](#default-view)
-7. [View resolution](#view-resolution)
+8. [Default view](#default-view)
+9. [View resolution](#view-resolution)
 
 ## Installation
 
@@ -25,13 +27,18 @@ Decorator to enable theming on ReactJS presentable components.
 npm install --save themeable
 ```
 
+## Presentable
+
+Themeables extends presentables functionality, it is recommended that you understand
+how they work first. [Check the presentable‘s readme here][presentable].
+
 ## Basic usage
 
 ```js
 import React, { Component } from 'react'
 import { themeable } from 'themeable'
 
-// The themeable is also a presentable (view model).
+// The themeable is also a presentable view model.
 @themeable
 class MyButton extends Component {
   // Write your button logic here.
@@ -249,4 +256,5 @@ The view used to render the component will be selected in the following order:
 3. Selected view from theme/theme kit in the context.
 4. Default view setted with the `defaultView` decorator from the presentable module.
 
+[presentable]: //github.com/borela/presentable
 [themeable]: //github.com/borela/themeable

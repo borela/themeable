@@ -230,3 +230,5 @@ The view used to render the component will be selected in the following order:
 2. Selected view from theme/theme kit specified in the theme property.
 3. Selected view from theme/theme kit in the context.
 4. Default view setted with the `defaultView` decorator from the presentable module.
+
+[themeable]: //github.com/borela/themeable

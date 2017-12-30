@@ -15,6 +15,7 @@ Decorator to enable theming on ReactJS presentable components.
    1. [Creating a theme kit](#creating-a-theme-kit)
    2. [Using the theme kit](#using-the-theme-kit)
    3. [Reusing themes on different components](#reusing-themes-on-different-components)
+   4. [Dynamic identifier](#dynamic-identifier)
 6. [Default view](#default-view)
 7. [View resolution](#view-resolution)
 
@@ -196,6 +197,23 @@ class ExtendedButton extends MyButton {
 <ExtendedBUtton view="red" theme={THEME_KIT}/>
 ```
 
+## Dynamic identifier
+
+If you need a different way of setting the custom identifier, it is possible to
+define a custom getter:
+
+```js
+@themeable
+class DynamicButton extends Component {
+  getThemeableIdentifier() {
+    return 'MyButton'
+  }
+}
+
+// It’ll use the theme for MyButton in the theme kit to render our button with the
+// dynamic identifier.
+<DynamicButton view="red" theme={THEME_KIT}/>
+```
 ## Default view
 
 Because themeables are also presentables, you can set a default view to render

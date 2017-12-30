@@ -40,14 +40,14 @@ class RedButtonView extends Component {
     // You can access the context, state and props from the themeable.
     let { context, state, props } = this.props.themeable
     // ...
-    return <Button>Red Button</Button>
+    return <button>Red Button</button>
   }
 }
 
 // Because a themeable is also a presentable, you can pass the view directly
 // to it when rendering:
 <MyButton view={RedButtonView}/>
-// Result: <Button>Red Button</Button>
+// Result: <button>Red Button</button>
 ```
 
 ## Creating a theme
@@ -58,7 +58,7 @@ class GreenButtonView extends Component {
     // You can access the context, state and props from the themeable.
     let { context, state, props } = this.props.themeable
     // ...
-    return <Button>Green Button</Button>
+    return <button>Green Button</button>
   }
 }
 
@@ -67,7 +67,7 @@ class BlueButtonView extends Component {
     // You can access the context, state and props from the themeable.
     let { context, state, props } = this.props.themeable
     // ...
-    return <Button>Blue Button</Button>
+    return <button>Blue Button</button>
   }
 }
 
@@ -111,12 +111,12 @@ const BUTTON_THEME = {
 ```js
 // If no specific view is selected, the default view from the theme will be used.
 <MyButton theme={BUTTON_THEME}/>
-// Result: <Button>Blue Button</Button>
+// Result: <button>Blue Button</button>
 
 // This time we select the red view to render the button. The view property can
 // either accept a component or a string to select a view from the theme.
 <MyButton view="red" theme={BUTTON_THEME}/>
-// Result: <Button>Red Button</Button>
+// Result: <button>Red Button</button>
 ```
 
 ## Context theming
@@ -129,9 +129,9 @@ import { ContexTheme } from 'themeable'
 // directly on the component.
 <ContextTheme theme={BUTTON_THEME}>
   <MyButton/>
-  {/* Result: <Button>Blue Button</Button> */}
+  {/* Result: <button>Blue Button</button> */}
   <MyButton view="red"/>
-  {/* Result: <Button>Red Button</Button> */}
+  {/* Result: <button>Red Button</button> */}
 </ContextTheme>
 ```
 
@@ -164,17 +164,17 @@ const THEME_KIT = {
 // MyButton.
 
 <MyButton theme={THEME_KIT}/>
-// Result: <Button>Blue Button</Button>
+// Result: <button>Blue Button</button>
 
 <MyButton view="red" theme={THEME_KIT}/>
-// Result: <Button>Red Button</Button>
+// Result: <button>Red Button</button>
 
 // You can pass theme kits to contexts too.
 <ContextTheme theme={THEME_KIT}>
   <MyButton/>
-  {/* Result: <Button>Blue Button</Button> */}
+  {/* Result: <button>Blue Button</button> */}
   <MyButton view="red"/>
-  {/* Result: <Button>Red Button</Button> */}
+  {/* Result: <button>Red Button</button> */}
 </ContextTheme>
 ```
 

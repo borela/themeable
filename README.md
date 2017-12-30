@@ -39,7 +39,7 @@ class MyButton extends Component {
 class RedButtonView extends Component {
   render() {
     // You can access the context, state and props from the themeable.
-    let { context, state, props } = this.props.themeable
+    let { context, state, props } = this.props.viewModel
     // ...
     return <button>Red Button</button>
   }
@@ -57,7 +57,7 @@ class RedButtonView extends Component {
 class GreenButtonView extends Component {
   render() {
     // You can access the context, state and props from the themeable.
-    let { context, state, props } = this.props.themeable
+    let { context, state, props } = this.props.viewModel
     // ...
     return <button>Green Button</button>
   }
@@ -66,7 +66,7 @@ class GreenButtonView extends Component {
 class BlueButtonView extends Component {
   render() {
     // You can access the context, state and props from the themeable.
-    let { context, state, props } = this.props.themeable
+    let { context, state, props } = this.props.viewModel
     // ...
     return <button>Blue Button</button>
   }
